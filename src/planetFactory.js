@@ -1,8 +1,4 @@
 import {
-  Clock,
-  Scene,
-  PerspectiveCamera,
-  WebGLRenderer,
   SphereGeometry,
   BoxBufferGeometry,
   WireframeGeometry,
@@ -17,28 +13,24 @@ import {
   OrbitControls
 } from "three";
 
-const geometry = new SphereGeometry(2, 16, 16);
-// const wireframe = new WireframeGeometry(geometry);
-// var line = new LineSegments(wireframe);
-// line.material = new LineBasicMaterial({
-//   color: 0xffffff,
-//   linewidth: 2,
-//   linecap: "round", //ignored by WebGLRenderer
-//   linejoin: "round" //ignored by WebGLRenderer
-// });
-const material = new MeshBasicMaterial({
-  color: Colors.BACKGROUND
-});
-const sphere = new Mesh(geometry, material);
-scene.add(sphere);
+import * as Colors from "./Colors";
 
-const otherSphere = new Mesh(
-  new SphereGeometry(1, 16, 16),
-  new MeshBasicMaterial({
-    color: Colors.BACKGROUND
-  })
-);
+const createPlanet = ({ size = 1 } = {}) => {
+  const geometry = new SphereGeometry(size, 16, 16);
+  // const wireframe = new WireframeGeometry(geometry);
+  // var line = new LineSegments(wireframe);
+  // line.material = new LineBasicMaterial({
+  //   color: 0xffffff,
+  //   linewidth: 2,
+  //   linecap: "round", //ignored by WebGLRenderer
+  //   linejoin: "round" //ignored by WebGLRenderer
+  // });
+  const material = new MeshBasicMaterial({
+    color: Colors.OUTLINE
+  });
+  const sphere = new Mesh(geometry, material);
 
-otherSphere.position.x = -3;
-otherSphere.position.z = -2;
-scene.add(otherSphere);
+  return sphere;
+};
+
+export default createPlanet;

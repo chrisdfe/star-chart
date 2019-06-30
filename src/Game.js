@@ -20,6 +20,7 @@ import {
 import { EffectComposer, RenderPass } from "postprocessing";
 
 import * as Colors from "./Colors";
+import createPlanet from "./planetFactory";
 
 class Game {
   constructor() {
@@ -27,7 +28,9 @@ class Game {
 
     this.initCamera();
     this.initRenderer();
-    this.initComposer();
+    // this.initComposer();
+
+    this.initPlanets();
 
     this.render();
   }
@@ -58,17 +61,25 @@ class Game {
     this.clock = new Clock();
   };
 
-  initPlanets = () => {};
+  initPlanets = () => {
+    const planet = createPlanet();
+    console.log("planet", planet);
+    this.scene.add(planet);
 
-  render() {
+    const smallerPlanet = createPlanet({ size: 0.2 });
+    smallerPlanet.position.x = 2;
+    this.scene.add(smallerPlanet);
+  };
+
+  render = () => {
     requestAnimationFrame(this.render);
     // line.rotation.x += 0.01;
     // line.rotation.y += 0.01;
-    // renderer.render(scene, camera);
+    this.renderer.render(this.scene, this.camera);
     // required if controls.enableDamping or controls.autoRotate are set to true
     // controls.update();
-    this.effectComposer.render(this.clock.getDelta());
-  }
+    // this.effectComposer.render(this.clock.getDelta());
+  };
 }
 
 export default Game;
