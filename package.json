@@ -1,0 +1,21 @@
+{
+  "name": "star-chart",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "parcel build src/index.js src/index.html --public-url ./ -d build --out-file=main",
+    "watch": "rimraf build && parcel watch src/index.js src/index.html --public-url ./ -d build --out-file=main",
+    "dev": "rimraf build && parcel src/index.html src/index.js"
+  },
+  "dependencies": {
+    "parcel-bundler": "^1.12.3",
+    "postprocessing": "^6.5.1",
+    "rimraf": "^2.6.3",
+    "three": "^0.106.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4"
+  }
+}
