@@ -13,22 +13,22 @@ import {
   RawShaderMaterial,
   Vector2,
   Vector4,
-  LineBasicMaterial,
-  OrbitControls
+  LineBasicMaterial
 } from "three";
+
+import OrbitControls from "orbit-controls-es6";
 
 import { EffectComposer, RenderPass } from "postprocessing";
 
 import * as Colors from "./Colors";
-import createPlanet from "./planetFactory";
+import SolarSystem from "./SolarSystem";
 
 class Game {
   constructor() {
     this.scene = new Scene();
 
-    this.initCamera();
     this.initRenderer();
-    // this.initComposer();
+    this.initCamera();
 
     this.initPlanets();
 
@@ -37,12 +37,30 @@ class Game {
 
   initCamera = () => {
     this.camera = new PerspectiveCamera(
-      75,
+      20,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
     );
-    this.camera.position.z = 5;
+
+    this.cameraControls = new OrbitControls(
+      this.camera,
+      this.renderer.domElement
+    );
+
+    this.camera.position.x = 0;
+    this.camera.position.y = 25;
+    this.camera.position.z = 30;
+
+    Object.assign(this.cameraControls, {
+      enabled: true,
+      enableDamping: true,
+      dampingFactor: 0.1,
+      maxDistance: 1500,
+      rotateSpeed: 0.08,
+      minDistance: 0,
+      zoomSpeed: 0.2
+    });
   };
 
   initRenderer = () => {
@@ -53,32 +71,18 @@ class Game {
     document.body.appendChild(this.renderer.domElement);
   };
 
-  initComposer = () => {
-    this.effectComposer = new EffectComposer(this.renderer);
-
-    this.effectComposer.addPass(new RenderPass(this.scene, this.camera));
-
-    this.clock = new Clock();
-  };
-
   initPlanets = () => {
-    const planet = createPlanet();
-    console.log("planet", planet);
-    this.scene.add(planet);
-
-    const smallerPlanet = createPlanet({ size: 0.2 });
-    smallerPlanet.position.x = 2;
-    this.scene.add(smallerPlanet);
+    this.solarSystem = new SolarSystem();
+    this.scene.add(this.solarSystem.entity);
   };
 
   render = () => {
     requestAnimationFrame(this.render);
-    // line.rotation.x += 0.01;
-    // line.rotation.y += 0.01;
     this.renderer.render(this.scene, this.camera);
     // required if controls.enableDamping or controls.autoRotate are set to true
-    // controls.update();
+    this.cameraControls.update();
     // this.effectComposer.render(this.clock.getDelta());
+    this.solarSystem.update();
   };
 }
 
