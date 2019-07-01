@@ -1,4 +1,8 @@
 const HtmlPlugin = require("html-webpack-plugin");
+const LinkTypePlugin = require("html-webpack-link-type-plugin")
+  .HtmlWebpackLinkTypePlugin;
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const path = require("path");
 
 module.exports = {
@@ -32,7 +36,11 @@ module.exports = {
   plugins: [
     new HtmlPlugin({
       title: "Star Chart",
-      template: "src/index.html"
+      template: "src/index.html",
+      inject: "body",
+      files: {
+        css: ["style.css"]
+      }
     })
   ]
 };

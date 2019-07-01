@@ -12,6 +12,7 @@ import {
   Math as ThreeMath
 } from "three";
 
+import uuid4 from "uuid4";
 import * as Colors from "./Colors";
 import {
   randomRotation,
@@ -31,6 +32,8 @@ export const MAX_PLANET_OPACITY = 0.9;
 
 export const MIN_ORBIT_CIRCLE_OPACITY = 0.2;
 export const MAX_ORBIT_CIRCLE_OPACITY = 0.3;
+
+const MOUSEOVER_COLOR = 0xff0000;
 
 const createOrbitLineMaterial = () =>
   new LineDashedMaterial({
@@ -68,6 +71,7 @@ const createOrbitCircle = ({ orbitSize = 2 }) => {
 class Planet {
   constructor(options = {}) {
     const {
+      name,
       size = 1,
       color = randomItemInArray(PLANET_COLORS),
       orbitSize = 2,
@@ -77,10 +81,21 @@ class Planet {
     } = options;
 
     Object.assign(this, {
+      name,
+      color,
       size,
       orbitSize,
       rotationSpeed
     });
+
+    this.uiObject = {
+      // TODO - set to planet name
+      name: "planet",
+      type: "planet",
+      isInteractable: true,
+      id: uuid4(),
+      parent: this
+    };
 
     this.group = new Group();
 
@@ -95,6 +110,7 @@ class Planet {
 
     this.sphere = new Mesh(this.geometry, this.material);
     this.sphere.position.z = orbitSize;
+    this.sphere.uiObject = this.uiObject;
 
     this.planetGroup.add(this.sphere);
     this.planetGroup.rotation.y = startRotation;
@@ -103,14 +119,11 @@ class Planet {
     if (orbitSize > 0) {
       this.orbitCircle = createOrbitCircle({ orbitSize });
       this.group.add(this.orbitCircle);
+      this.orbitCircle.uiObject = this.uiObject;
     }
 
     this.entity = this.group;
-
-    this.entity.on("click", e => {
-      console.log("clickity click", e);
-      EventBus.trigger("planet-highlight:requested", { planet: this });
-    });
+    this.mouseover = false;
   }
 
   update() {
@@ -129,13 +142,34 @@ class Planet {
       );
     }
   }
+
+  onMouseOver() {
+    this.sphere.material.color.setHex(MOUSEOVER_COLOR);
+    if (this.orbitCircle) {
+      this.orbitCircle.material.color.setHex(MOUSEOVER_COLOR);
+    }
+  }
+
+  onMouseOut() {
+    this.sphere.material.color.setHex(this.color);
+    if (this.orbitCircle) {
+      this.orbitCircle.material.color.setHex(this.color);
+    }
+  }
 }
 
 export default Planet;
 
+// TODO - this should be a factory instead
 export class Sun extends Planet {
   constructor(options = {}) {
     const { size = 1 } = options;
-    super({ size, color: Colors.WHITE, orbitSize: 0, rotationSpeed: 0 });
+    super({
+      size,
+      name: "The Sun",
+      color: Colors.WHITE,
+      orbitSize: 0,
+      rotationSpeed: 0
+    });
   }
 }

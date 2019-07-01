@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
-
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap"
+      type="text/css"
+      rel="stylesheet"
+    />
     <style>
       html,
       body {
@@ -14,7 +18,27 @@
       #fragment {
         display: none;
       }
+
+      .ui-wrapper {
+        color: #fff;
+        font-family: "Roboto Mono", monospace;
+      }
+
+      .ui-planet-name {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        padding: 10px;
+        transform: translateX(-50%);
+      }
+
+      .ui-planet-name.is-visible {
+      }
     </style>
   </head>
-  <body></body>
+  <body>
+    <div class="ui-wrapper">
+      <div class="ui-planet-name">test</div>
+    </div>
+  </body>
 </html>
