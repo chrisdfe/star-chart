@@ -26,6 +26,12 @@ export const MAX_ORBIT_SPEED = 0.15;
 
 export const PLANET_COLORS = [0xd7e7e8, 0xafc8c9, 0xafc8c9];
 
+export const MIN_PLANET_OPACITY = 0.8;
+export const MAX_PLANET_OPACITY = 0.9;
+
+export const MIN_ORBIT_CIRCLE_OPACITY = 0.2;
+export const MAX_ORBIT_CIRCLE_OPACITY = 0.3;
+
 const createOrbitLineMaterial = () =>
   new LineDashedMaterial({
     color: 0xffffff,
@@ -83,7 +89,8 @@ class Planet {
     this.geometry = new SphereGeometry(size, 32, 32);
 
     this.material = new MeshBasicMaterial({
-      color
+      color,
+      transparent: true
     });
 
     this.sphere = new Mesh(this.geometry, this.material);
@@ -94,7 +101,8 @@ class Planet {
     this.group.add(this.planetGroup);
 
     if (orbitSize > 0) {
-      this.group.add(createOrbitCircle({ orbitSize }));
+      this.orbitCircle = createOrbitCircle({ orbitSize });
+      this.group.add(this.orbitCircle);
     }
 
     this.entity = this.group;
@@ -108,6 +116,18 @@ class Planet {
   update() {
     this.planetGroup.rotation.y =
       this.planetGroup.rotation.y + ThreeMath.degToRad(1 * this.rotationSpeed);
+
+    this.sphere.material.opacity = randomFloatBetween(
+      MIN_PLANET_OPACITY,
+      MAX_PLANET_OPACITY
+    );
+
+    if (this.orbitCircle) {
+      this.orbitCircle.material.opacity = randomFloatBetween(
+        MIN_ORBIT_CIRCLE_OPACITY,
+        MAX_ORBIT_CIRCLE_OPACITY
+      );
+    }
   }
 }
 

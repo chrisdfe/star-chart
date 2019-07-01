@@ -67,13 +67,19 @@ class Game {
       zoomSpeed: 0.2
     });
 
-    EventBus.on("planet-highlight:requested", ({ planet }) => {
-      this.scene.updateMatrixWorld();
-      let targetPosition = new Vector3();
-      // TODO - don't access this directly
-      planet.sphere.getWorldPosition(targetPosition);
-      this.cameraControls.target = targetPosition;
-      this.cameraControls.update();
+    // EventBus.on("planet-highlight:requested", ({ planet }) => {
+    //   this.scene.updateMatrixWorld();
+    //   let targetPosition = new Vector3();
+    //   // TODO - don't access this directly
+    //   planet.sphere.getWorldPosition(targetPosition);
+    //   this.cameraControls.target = targetPosition;
+    //   this.cameraControls.update();
+    // });
+
+    window.addEventListener("resize", () => {
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.updateProjectionMatrix();
     });
   };
 

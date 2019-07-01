@@ -1,9 +1,13 @@
+import seedrandom from "seedrandom";
 import { Math as ThreeMath } from "three";
+import uuid4 from "uuid4";
 
-// TODO - seeded random
-export const randomFloat = () => Math.random();
+const seed = uuid4();
+const random = seedrandom(seed);
 
-export const randomRotation = () => ThreeMath.degToRad(Math.random() * 360);
+export const randomFloat = () => random();
+
+export const randomRotation = () => ThreeMath.degToRad(randomFloat() * 360);
 
 export const randomFloatBetween = (min, max) =>
   randomFloat() * (max - min) + min;

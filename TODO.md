@@ -2,8 +2,12 @@
 
 ## General
 
-- Seeded randomness
+### Done
+
 - flickering outlines
+- Seeded randomness
+- Get rid of parcel
+- Set up webpack
 
 ## Planets
 
@@ -13,13 +17,13 @@
 - procgen planet names
 - progen planet stories
 
+### Done
+
+- Add orbit lines
+- Basic Solar system procgen
+
 ## Music
 
 - Set up synth system
 
-# Done
-
-- Get rid of parcel
-- Set up webpack
-- Add orbit lines
-- Solar system procgen
+### Done
