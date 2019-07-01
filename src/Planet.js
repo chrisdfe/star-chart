@@ -19,6 +19,8 @@ import {
   randomItemInArray
 } from "./randomUtils";
 
+import EventBus from "./EventBus";
+
 export const MIN_ORBIT_SPEED = 0.01;
 export const MAX_ORBIT_SPEED = 0.15;
 
@@ -96,6 +98,11 @@ class Planet {
     }
 
     this.entity = this.group;
+
+    this.entity.on("click", e => {
+      console.log("clickity click", e);
+      EventBus.trigger("planet-highlight:requested", { planet: this });
+    });
   }
 
   update() {

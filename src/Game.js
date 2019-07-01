@@ -12,9 +12,11 @@ import {
   MeshBasicMaterial,
   RawShaderMaterial,
   Vector2,
+  Vector3,
   Vector4,
   LineBasicMaterial
 } from "three";
+import { Interaction } from "three.interaction";
 
 import OrbitControls from "orbit-controls-es6";
 
@@ -23,14 +25,17 @@ import { EffectComposer, RenderPass } from "postprocessing";
 import * as Colors from "./Colors";
 import SolarSystem from "./SolarSystem";
 
+import EventBus from "./EventBus";
+
 class Game {
   constructor() {
     this.scene = new Scene();
 
     this.initRenderer();
     this.initCamera();
-
     this.initPlanets();
+
+    this.interaction = new Interaction(this.renderer, this.scene, this.camera);
 
     this.render();
   }
@@ -61,6 +66,15 @@ class Game {
       minDistance: 0,
       zoomSpeed: 0.2
     });
+
+    EventBus.on("planet-highlight:requested", ({ planet }) => {
+      this.scene.updateMatrixWorld();
+      let targetPosition = new Vector3();
+      // TODO - don't access this directly
+      planet.sphere.getWorldPosition(targetPosition);
+      this.cameraControls.target = targetPosition;
+      this.cameraControls.update();
+    });
   };
 
   initRenderer = () => {
@@ -78,6 +92,7 @@ class Game {
 
   render = () => {
     requestAnimationFrame(this.render);
+    this.scene.updateMatrixWorld();
     this.renderer.render(this.scene, this.camera);
     // required if controls.enableDamping or controls.autoRotate are set to true
     this.cameraControls.update();
