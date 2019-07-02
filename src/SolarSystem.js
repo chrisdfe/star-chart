@@ -1,5 +1,5 @@
 import { Group, Vector3 } from "three";
-import Planet, { Sun } from "./Planet";
+import { Planet, Sun } from "./planets";
 import {
   randomFloat,
   randomFloatBetween,

@@ -3,7 +3,6 @@ import {
   Scene,
   PerspectiveCamera,
   WebGLRenderer,
-  SphereGeometry,
   BoxBufferGeometry,
   WireframeGeometry,
   EdgesGeometry,

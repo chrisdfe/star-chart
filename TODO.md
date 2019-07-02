@@ -2,6 +2,8 @@
 
 ## General
 
+- Split up into separate systems - GFX, Sound (communicate w/ event bus)
+
 ### Done
 
 - flickering outlines
@@ -11,7 +13,8 @@
 
 ## Planets
 
-- Add planets with moons
+- Prevent moons from being bigger than planets
+- Add function to calculate total orbit size incl. moons to prevent overlapping
 - planet biomes/types
 - planet features (mountains, seas etc)
 - procgen planet names
@@ -21,6 +24,7 @@
 
 - Add orbit lines
 - Basic Solar system procgen
+- Add planets with moons
 
 ## Music
 
