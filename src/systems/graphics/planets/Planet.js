@@ -23,9 +23,9 @@ import {
   randomRotation,
   randomFloatBetween,
   randomItemInArray
-} from "../randomUtils";
+} from "../../../randomUtils";
 
-import EventBus from "../EventBus";
+import EventBus from "../../../EventBus";
 
 import {
   createOrbitLineMaterial,
@@ -35,7 +35,7 @@ import {
 } from "./utils";
 
 export default class Planet {
-  static MIN_ORBIT_SPEED = 0.01;
+  static MIN_ORBIT_SPEED = 0.05;
   static MAX_ORBIT_SPEED = 0.15;
 
   static PLANET_COLORS = [0xd7e7e8, 0xafc8c9, 0xafc8c9];
@@ -56,7 +56,8 @@ export default class Planet {
       orbitSize = 2,
       position = new Vector3(0, 0, 0),
       startRotation = randomRotation(),
-      rotationSpeed = randomFloatBetween(MIN_ORBIT_SPEED, MAX_ORBIT_SPEED)
+      rotationSpeed = randomFloatBetween(MIN_ORBIT_SPEED, MAX_ORBIT_SPEED),
+      order = 1
     } = options;
 
     Object.assign(this, {
@@ -64,15 +65,16 @@ export default class Planet {
       color,
       size,
       orbitSize,
-      rotationSpeed
+      rotationSpeed,
+      order
     });
 
     this.isSelected = false;
 
     // TODO - rename this to 'interactable' or something
     this.uiObject = {
-      // TODO - set to planet name
       name,
+      order,
       type: "planet",
       isInteractable: true,
       id: uuid4(),
@@ -115,10 +117,6 @@ export default class Planet {
 
     this.entity = this.group;
     this.mouseover = false;
-
-    EventBus.on("click", ({ uiObject }) => {
-      console.log("planet on click", uiObject === this.uiObject);
-    });
   }
 
   update() {

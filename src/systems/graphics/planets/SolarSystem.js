@@ -1,12 +1,13 @@
 import { Group, Vector3 } from "three";
-import { Planet, Sun } from "./planets";
+import Planet from "./Planet";
+import Sun from "./Sun";
 import {
   randomFloat,
   randomFloatBetween,
   randomIntegerBetween
-} from "./randomUtils";
+} from "../../../randomUtils";
 
-import EventBus from "./EventBus";
+import EventBus from "../../../EventBus";
 
 export const MIN_PLANETS = 3;
 export const MAX_PLANETS = 10;
@@ -45,6 +46,7 @@ class SolarSystem {
       }
       this.selectedPlanet = selectedPlanet.parent;
       this.selectedPlanet.onMouseOver();
+
       EventBus.trigger("planet:mouseover", {
         selectedPlanet: this.selectedPlanet
       });
@@ -81,9 +83,11 @@ class SolarSystem {
         currentOrbitSize + size + MAX_ORBIT_DIFFERENCE
       );
       currentOrbitSize = orbitSize + size;
+      const order = index + 1;
 
       return new Planet({
-        name: `Planet #${index + 1}`,
+        name: `Planet #${order}`,
+        order,
         size,
         orbitSize
       });

@@ -1,5 +1,6 @@
-import EventBus from "./EventBus";
-class UILayer {
+import EventBus from "../../EventBus";
+
+export default class UILayer {
   constructor() {
     this.elements = {
       planetNameLabel: document.querySelector(".ui-planet-name")
@@ -15,4 +16,3 @@ class UILayer {
   }
 }
 
-export default UILayer;

@@ -24,6 +24,7 @@ export default class Sun extends Planet {
       size,
       name: "The Sun",
       color: Colors.WHITE,
+      order: 0,
       orbitSize: 0,
       rotationSpeed: 0
     });
