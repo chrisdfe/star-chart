@@ -3,15 +3,23 @@ import {
   WireframeGeometry,
   Mesh,
   MeshBasicMaterial,
+  MeshStandardMaterial,
   RawShaderMaterial,
   LineBasicMaterial,
   LineDashedMaterial,
+  ParticleBasicMaterial,
   Geometry,
   Line,
   Group,
   Vector3,
-  Math as ThreeMath
+  Math as ThreeMath,
+  AdditiveBlending,
+  Texture,
+  RepeatWrapping
 } from "three";
+
+import { createDebugPlanetTexture } from "./textures";
+import { createDebugShaderMaterial } from "./shaders/debug";
 
 export const createOrbitLineMaterial = () =>
   new LineDashedMaterial({
@@ -41,7 +49,7 @@ export const createCircleGeometry = ({
 };
 
 export const createOrbitCircle = ({ radius = 2 } = {}) => {
-  const geometry = createCircleGeometry({ radius });
+  const geometry = createCircleGeometry({ radius, segmentCount: 32 });
   const material = createOrbitLineMaterial();
 
   const line = new Line(geometry, material);
@@ -49,13 +57,22 @@ export const createOrbitCircle = ({ radius = 2 } = {}) => {
   return line;
 };
 
-export const createPlanetSphere = ({ color = 0xffffff, size = 1 } = {}) => {
-  const geometry = new SphereGeometry(size, 32, 32);
+export const createPlanetSphere = ({
+  color = 0xffffff,
+  size = 1,
+  polygons = 16
+} = {}) => {
+  const geometry = new SphereGeometry(size, polygons, polygons);
 
-  const material = new MeshBasicMaterial({
-    color,
-    transparent: true
-  });
+  // const material = new MeshBasicMaterial({
+  //   // const material = new MeshStandardMaterial({
+  //   color,
+  //   transparent: true,
+  //   alphaMap: createDebugPlanetTexture()
+  //   // displacementMap: createDebugPlanetTexture()
+  //   // image: createDebugPlanetTexture()
+  // });
+  const material = createDebugShaderMaterial();
 
   return new Mesh(geometry, material);
 };

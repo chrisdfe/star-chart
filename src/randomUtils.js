@@ -2,7 +2,7 @@ import seedrandom from "seedrandom";
 import { Math as ThreeMath } from "three";
 import uuid4 from "uuid4";
 
-const seed = uuid4();
+export const seed = uuid4();
 const random = seedrandom(seed);
 
 export const randomFloat = () => random();

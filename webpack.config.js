@@ -30,6 +30,12 @@ module.exports = {
           }
         },
         exclude: /node_modules/
+      },
+      {
+        test: /\.glsl$/,
+        use: {
+          loader: "raw-loader"
+        }
       }
     ]
   },

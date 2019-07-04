@@ -115,6 +115,10 @@ export default class Planet {
 
     this.entity = this.group;
     this.mouseover = false;
+
+    EventBus.on("click", ({ uiObject }) => {
+      console.log("planet on click", uiObject === this.uiObject);
+    });
   }
 
   update() {

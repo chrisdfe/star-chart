@@ -87,6 +87,9 @@ class Game {
     this.camera.position.y = 25;
     this.camera.position.z = 30;
 
+    this.mouseOvers = [];
+    this.mouseOuts = [];
+
     Object.assign(this.cameraControls, {
       enabled: true,
       enableDamping: true,
@@ -101,6 +104,13 @@ class Game {
       this.renderer.setSize(window.innerWidth, window.innerHeight);
       this.camera.aspect = window.innerWidth / window.innerHeight;
       this.camera.updateProjectionMatrix();
+    });
+
+    window.addEventListener("click", () => {
+      if (this.intersects.length) {
+        const uiObject = this.intersects[0];
+        EventBus.trigger("click", { uiObject });
+      }
     });
   };
 
@@ -135,22 +145,22 @@ class Game {
       })
       .map(({ object }) => object.uiObject);
 
-    const mouseOuts = oldIntersects.filter(
+    this.mouseOuts = oldIntersects.filter(
       uiObject => !newIntersects.includes(uiObject)
     );
 
-    const mouseOvers = newIntersects.filter(
+    this.mouseOvers = newIntersects.filter(
       uiObject => !oldIntersects.includes(uiObject)
     );
 
     this.intersects = newIntersects;
 
-    if (mouseOvers.length) {
-      EventBus.trigger("mouseover", { intersects: mouseOvers });
+    if (this.mouseOvers.length) {
+      EventBus.trigger("mouseover", { intersects: this.mouseOvers });
     }
 
-    if (mouseOuts.length) {
-      EventBus.trigger("mouseout", { intersects: mouseOuts });
+    if (this.mouseOuts.length) {
+      EventBus.trigger("mouseout", { intersects: this.mouseOuts });
     }
   };
 

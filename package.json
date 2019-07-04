@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "postprocessing": "^6.5.1",
+    "raw-loader": "^3.0.0",
     "rimraf": "^2.6.3",
     "seedrandom": "^3.0.1",
+    "simplex-noise": "^2.4.0",
     "three": "^0.106.2",
     "uuid4": "^1.1.4"
   },

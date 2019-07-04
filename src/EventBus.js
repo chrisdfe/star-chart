@@ -4,8 +4,6 @@ class EventBus {
   }
 
   on = (eventName, callback) => {
-    console.log("registering event for ", eventName);
-
     if (!this.events[eventName]) {
       this.events[eventName] = [];
     }
