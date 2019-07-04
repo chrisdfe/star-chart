@@ -1,7 +1,9 @@
-import EventBus from "../../EventBus";
+import EventBus from "../../../EventBus";
 
-export default class UILayer {
-  constructor() {
+export default class DOMUIController {
+  constructor(parent) {
+    this.parent = parent;
+
     this.elements = {
       planetNameLabel: document.querySelector(".ui-planet-name")
     };

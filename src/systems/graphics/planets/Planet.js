@@ -96,6 +96,16 @@ export default class Planet {
     this.selectionRing = new SelectionRing(size + 0.2);
     this.sphereWrapperGroup.add(this.selectionRing.entity);
 
+    // this.mapRings = new Group();
+    // const mapRingCount = 8;
+    // [...new Array(mapRingCount)].forEach((u, index) => {
+    //   const mapRing = createOrbitCircle({ radius: size + 0.0001 });
+    //   mapRing.rotateZ(ThreeMath.degToRad(-90));
+    //   mapRing.rotateX(ThreeMath.degToRad((360 / mapRingCount) * index));
+    //   this.mapRings.add(mapRing);
+    // });
+    // this.sphereWrapperGroup.add(this.mapRings);
+
     this.moons = [];
     const hasMoon = randomFloat() > 0.4;
 

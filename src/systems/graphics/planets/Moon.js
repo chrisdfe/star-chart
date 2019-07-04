@@ -33,7 +33,7 @@ export default class Moon {
   static MIN_MOON_ORBIT_SIZE = 0.2;
   static MAX_MOON_ORBIT_SIZE = 1;
 
-  static MIN_MOON_SIZE = 0.01;
+  static MIN_MOON_SIZE = 0.02;
   static MAX_MOON_SIZE = 0.07;
 
   constructor(options = {}) {

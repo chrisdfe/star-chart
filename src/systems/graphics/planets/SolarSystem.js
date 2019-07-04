@@ -20,6 +20,7 @@ export const MAX_ORBIT_DIFFERENCE = 2;
 class SolarSystem {
   constructor() {
     this.group = new Group();
+    this.entity = this.group;
 
     this.sun = new Sun({
       size: 1
@@ -28,11 +29,11 @@ class SolarSystem {
 
     this.createPlanets();
 
-    this.entity = this.group;
     this.selectedPlanet = null;
 
-    EventBus.on("mouseover", this.handleMouseOver);
-    EventBus.on("mouseout", this.handleMouseOut);
+    EventBus.on("input:mouseover", this.handleMouseOver);
+    EventBus.on("input:mouseout", this.handleMouseOut);
+    EventBus.on("input:click", this.handleClick);
   }
 
   handleMouseOver = ({ intersects }) => {
@@ -65,6 +66,16 @@ class SolarSystem {
         selectedPlanet: this.selectedPlanet
       });
       this.selectedPlanet = null;
+    }
+  };
+
+  handleClick = ({ intersects }) => {
+    const uiObject = intersects.find(({ type }) => type === "planet");
+    const planet = this.planets.find(
+      planet => planet.uiObject.id === uiObject.id
+    );
+    if (planet) {
+      EventBus.trigger("planet:select-requested", { planet });
     }
   };
 
@@ -103,6 +114,8 @@ class SolarSystem {
   }
 
   update() {
+    this.group.updateMatrixWorld();
+    this.group.position.y += 0.001;
     this.planets.forEach(planet => {
       planet.update();
     });
