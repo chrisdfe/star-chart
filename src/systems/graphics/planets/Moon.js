@@ -64,7 +64,11 @@ export default class Moon {
       MAX_MOON_ORBIT_SIZE
     );
 
-    this.moonOrbitCircle = createOrbitCircle({ radius: moonRadius });
+    this.moonOrbitCircle = createOrbitCircle({
+      geometry: {
+        radius: moonRadius
+      }
+    });
     this.group.add(this.moonOrbitCircle);
 
     this.moonSphereWrapperGroup = new Group();

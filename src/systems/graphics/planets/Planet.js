@@ -31,7 +31,8 @@ import {
   createOrbitLineMaterial,
   createCircleGeometry,
   createOrbitCircle,
-  createPlanetSphere
+  createPlanetSphere,
+  createCircleLine
 } from "./utils";
 
 export default class Planet {
@@ -96,15 +97,27 @@ export default class Planet {
     this.selectionRing = new SelectionRing(size + 0.2);
     this.sphereWrapperGroup.add(this.selectionRing.entity);
 
-    // this.mapRings = new Group();
-    // const mapRingCount = 8;
-    // [...new Array(mapRingCount)].forEach((u, index) => {
-    //   const mapRing = createOrbitCircle({ radius: size + 0.0001 });
-    //   mapRing.rotateZ(ThreeMath.degToRad(-90));
-    //   mapRing.rotateX(ThreeMath.degToRad((360 / mapRingCount) * index));
-    //   this.mapRings.add(mapRing);
-    // });
-    // this.sphereWrapperGroup.add(this.mapRings);
+    this.mapRings = new Group();
+    const verticalMapRingCoupt = 16;
+    [...new Array(verticalMapRingCoupt)].forEach((u, index) => {
+      const mapRing = createOrbitCircle({
+        geometry: {
+          radius: size + 0.0001
+        },
+        material: {
+          opacity: index % 4 === 0 ? 0.3 : 0.1
+        }
+      });
+      mapRing.rotateZ(ThreeMath.degToRad(-90));
+      mapRing.rotateX(ThreeMath.degToRad((360 / verticalMapRingCoupt) * index));
+      this.mapRings.add(mapRing);
+    });
+    const equatorMapRing = createCircleLine({
+      geometry: { radius: size + 0.0001 }
+    });
+    // console.log("equatorMapRing", equatorMapRing);
+    this.mapRings.add(equatorMapRing);
+    this.sphereWrapperGroup.add(this.mapRings);
 
     this.moons = [];
     const hasMoon = randomFloat() > 0.4;
@@ -120,7 +133,11 @@ export default class Planet {
     this.group.add(this.planetGroup);
 
     if (orbitSize > 0) {
-      this.orbitCircle = createOrbitCircle({ radius: orbitSize });
+      this.orbitCircle = createOrbitCircle({
+        geometry: {
+          radius: orbitSize
+        }
+      });
       this.orbitCircle.uiObject = this.uiObject;
       this.group.add(this.orbitCircle);
     }

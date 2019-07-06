@@ -17,6 +17,8 @@ export const MAX_PLANET_SIZE = 0.2;
 export const MIN_ORBIT_DIFFERENCE = 0.01;
 export const MAX_ORBIT_DIFFERENCE = 2;
 
+import { starBackdropFactory } from "./factories";
+
 class SolarSystem {
   constructor() {
     this.group = new Group();
@@ -28,6 +30,9 @@ class SolarSystem {
     this.group.add(this.sun.entity);
 
     this.createPlanets();
+    // TODO - reanme to randomStarBackdropFactory
+    // this.stars = starBackdropFactory();
+    // this.group.add(this.stars);
 
     this.selectedPlanet = null;
 

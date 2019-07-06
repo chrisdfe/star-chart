@@ -21,7 +21,7 @@ import {
 import { createDebugPlanetTexture } from "./textures";
 import { createDebugShaderMaterial } from "./shaders/debug";
 
-export const createOrbitLineMaterial = () =>
+export const createOrbitLineMaterial = (params = {}) =>
   new LineDashedMaterial({
     color: 0xffffff,
     opacity: 0.4,
@@ -29,7 +29,8 @@ export const createOrbitLineMaterial = () =>
     linewidth: 1,
     scale: 1,
     dashSize: 0.1,
-    gapSize: 0.05
+    gapSize: 0.05,
+    ...params
   });
 
 export const createCircleGeometry = ({
@@ -48,9 +49,36 @@ export const createCircleGeometry = ({
   return geometry;
 };
 
-export const createOrbitCircle = ({ radius = 2 } = {}) => {
-  const geometry = createCircleGeometry({ radius, segmentCount: 32 });
-  const material = createOrbitLineMaterial();
+export const createCircleLine = ({
+  geometry: geometryParams,
+  material: materialParams
+} = {}) => {
+  const geometry = createCircleGeometry({
+    // radius: size + 0.0001,
+    radius: 3,
+    segmentCount: 32,
+    ...geometryParams
+  });
+
+  const material = new LineBasicMaterial({
+    color: 0xffffff,
+    opacity: 0.4,
+    transparent: true,
+    ...materialParams
+  });
+
+  return new Line(geometry, material);
+};
+
+export const createOrbitCircle = ({
+  geometry: geometryParams,
+  material: materialParams
+} = {}) => {
+  const geometry = createCircleGeometry({
+    segmentCount: 32,
+    ...geometryParams
+  });
+  const material = createOrbitLineMaterial({ ...materialParams });
 
   const line = new Line(geometry, material);
   line.computeLineDistances();
@@ -67,8 +95,9 @@ export const createPlanetSphere = ({
   // const material = new MeshBasicMaterial({
   //   // const material = new MeshStandardMaterial({
   //   color,
-  //   transparent: true,
-  //   alphaMap: createDebugPlanetTexture()
+  //   transparent: true
+  //   // opacity: 0.01
+  //   // alphaMap: createDebugPlanetTexture()
   //   // displacementMap: createDebugPlanetTexture()
   //   // image: createDebugPlanetTexture()
   // });
