@@ -23,7 +23,7 @@ export default class InputController {
     this.raycaster.linePrecision = 0.2;
 
     window.addEventListener("resize", () => {
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.parent.renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
     window.addEventListener("mousemove", event => {

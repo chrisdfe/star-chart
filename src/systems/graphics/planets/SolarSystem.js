@@ -79,9 +79,9 @@ class SolarSystem {
     const planet = this.planets.find(
       planet => planet.uiObject.id === uiObject.id
     );
-    if (planet) {
-      EventBus.trigger("planet:select-requested", { planet });
-    }
+    // if (planet) {
+    //   EventBus.trigger("planet:select-requested", { planet });
+    // }
   };
 
   createPlanets() {
@@ -120,7 +120,6 @@ class SolarSystem {
 
   update() {
     this.group.updateMatrixWorld();
-    this.group.position.y += 0.001;
     this.planets.forEach(planet => {
       planet.update();
     });

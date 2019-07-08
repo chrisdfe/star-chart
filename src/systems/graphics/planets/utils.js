@@ -19,7 +19,10 @@ import {
 } from "three";
 
 import { createDebugPlanetTexture } from "./textures";
-import { createDebugShaderMaterial } from "./shaders/debug";
+import {
+  createDebugShaderMaterial,
+  createNoiseShaderMaterial
+} from "./materials";
 
 export const createOrbitLineMaterial = (params = {}) =>
   new LineDashedMaterial({
@@ -30,6 +33,7 @@ export const createOrbitLineMaterial = (params = {}) =>
     scale: 1,
     dashSize: 0.1,
     gapSize: 0.05,
+    depthWrite: false,
     ...params
   });
 
@@ -101,7 +105,8 @@ export const createPlanetSphere = ({
   //   // displacementMap: createDebugPlanetTexture()
   //   // image: createDebugPlanetTexture()
   // });
-  const material = createDebugShaderMaterial();
+  // const material = createDebugShaderMaterial();
+  const material = createNoiseShaderMaterial();
 
   return new Mesh(geometry, material);
 };

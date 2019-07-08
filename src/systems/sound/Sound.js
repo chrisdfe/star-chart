@@ -15,7 +15,6 @@ import EventBus from "../../EventBus";
 
 export default class Sound {
   constructor() {
-    console.log("initializing sound", chromatics);
     //create a synth and connect it to the master output (your speakers)
     // const synth = new Tone.Synth().toMaster();
     // const loop = new Tone.Loop(function(time) {
@@ -42,7 +41,6 @@ export default class Sound {
     }).toMaster();
     this.selectionSFXSynth.volume.value = -10;
 
-    const notes = Object.keys(chromatics);
     EventBus.on("planet:mouseover", ({ selectedPlanet }) => {
       const index = selectedPlanet.order + 1 || -1;
       const note = 400 + 150 * index;

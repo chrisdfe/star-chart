@@ -1,6 +1,6 @@
 import { Clock, Color, Vector2, Vector3, ShaderMaterial } from "three";
 // import fragmentShader from "./gradient.glsl";
-import fragmentShader from "./flat.glsl";
+import fragmentShader from "../shaders/dots.glsl";
 
 // GLSL expects color values to be 0-1
 const vec3FromColor = color =>
@@ -9,21 +9,24 @@ const vec3FromColor = color =>
 export const createDebugShaderMaterial = () => {
   // const clock = new Clock();
 
-  // const uniforms = {
-  //     u_time: { type: "f", value: 1.0 },
-  //     u_resolution: {
-  //       type: "v2",
-  //       value: new Vector2(window.innerWidth, window.innerHeight)
-  //     }
-  //   },
-
   const uniforms = {
-    color: { type: "v3", value: vec3FromColor(new Color(0, 40, 255)) }
+    u_color: {
+      type: "v3",
+      // value: vec3FromColor(new Color(0, 40, 255))
+      value: vec3FromColor(new Color(255, 0, 0))
+    },
+    u_resolution: {
+      type: "v2",
+      value: new Vector2(window.innerWidth, window.innerHeight)
+    }
   };
 
   const mat = new ShaderMaterial({
     uniforms,
-    fragmentShader
+    fragmentShader,
+    transparent: true,
+    alphaTest: 1,
+    depthWrite: false
   });
 
   // const updateTimeValue = () => {
