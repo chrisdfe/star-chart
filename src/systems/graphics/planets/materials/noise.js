@@ -1,9 +1,11 @@
 import { Vector2, Vector3, Color, ShaderMaterial } from "three";
 import fragmentShader from "../shaders/noise.glsl";
 
-export const createNoiseShaderMaterial = ({
+const createNoiseShaderMaterial = ({
   clip = 0.4,
-  color = new Color(0xff0000)
+  color = new Color(0xff0000),
+  scale = 200,
+  alpha = 1.0
 } = {}) => {
   const uniforms = {
     u_resolution: {
@@ -17,6 +19,14 @@ export const createNoiseShaderMaterial = ({
     clip: {
       type: "float",
       value: clip
+    },
+    scale: {
+      type: "float",
+      value: scale
+    },
+    alpha: {
+      type: "float",
+      value: alpha
     }
   };
 
@@ -27,3 +37,5 @@ export const createNoiseShaderMaterial = ({
     depthWrite: false
   });
 };
+
+export default createNoiseShaderMaterial;

@@ -11,6 +11,7 @@ import {
   Geometry,
   Line,
   Group,
+  Color,
   Vector3,
   Math as ThreeMath,
   AdditiveBlending,
@@ -20,7 +21,8 @@ import {
 
 import { createDebugPlanetTexture } from "./textures";
 import {
-  createDebugShaderMaterial,
+  createDotsShaderMaterial,
+  createLinesShaderMaterial,
   createNoiseShaderMaterial
 } from "./materials";
 
@@ -96,17 +98,24 @@ export const createPlanetSphere = ({
 } = {}) => {
   const geometry = new SphereGeometry(size, polygons, polygons);
 
-  // const material = new MeshBasicMaterial({
-  //   // const material = new MeshStandardMaterial({
-  //   color,
-  //   transparent: true
-  //   // opacity: 0.01
-  //   // alphaMap: createDebugPlanetTexture()
-  //   // displacementMap: createDebugPlanetTexture()
-  //   // image: createDebugPlanetTexture()
+  const material = new MeshBasicMaterial({
+    // const material = new MeshStandardMaterial({
+    color,
+    transparent: true,
+    opacity: 0.4,
+    // alphaTest: 1,
+    depthWrite: false
+    // alphaMap: createDebugPlanetTexture()
+    // displacementMap: createDebugPlanetTexture()
+    // image: createDebugPlanetTexture()
+  });
+
+  // const material = createLinesShaderMaterial();
+  // const material = createNoiseShaderMaterial({
+  //   scale: 10000,
+  //   color: new Color(255, 255, 255),
+  //   alpha: 0.8
   // });
-  // const material = createDebugShaderMaterial();
-  const material = createNoiseShaderMaterial();
 
   return new Mesh(geometry, material);
 };

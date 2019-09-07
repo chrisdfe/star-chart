@@ -98,8 +98,9 @@ export default class Planet {
     this.sphereWrapperGroup.add(this.selectionRing.entity);
 
     this.mapRings = new Group();
-    const verticalMapRingCoupt = 16;
-    [...new Array(verticalMapRingCoupt)].forEach((u, index) => {
+    const verticalMapRingCount = 16;
+
+    [...new Array(verticalMapRingCount)].forEach((u, index) => {
       const mapRing = createOrbitCircle({
         geometry: {
           radius: size + 0.0001
@@ -109,13 +110,14 @@ export default class Planet {
         }
       });
       mapRing.rotateZ(ThreeMath.degToRad(-90));
-      mapRing.rotateX(ThreeMath.degToRad((360 / verticalMapRingCoupt) * index));
+      mapRing.rotateX(ThreeMath.degToRad((360 / verticalMapRingCount) * index));
       this.mapRings.add(mapRing);
     });
+
     const equatorMapRing = createCircleLine({
       geometry: { radius: size + 0.0001 }
     });
-    // console.log("equatorMapRing", equatorMapRing);
+
     this.mapRings.add(equatorMapRing);
     this.sphereWrapperGroup.add(this.mapRings);
 
@@ -156,24 +158,24 @@ export default class Planet {
 
     this.planetGroup.rotateY(ThreeMath.degToRad(1 * this.rotationSpeed));
 
-    if (!this.isSelected) {
-      this.sphere.material.opacity = randomFloatBetween(
-        MIN_OPACITY,
-        MAX_OPACITY
-      );
+    // if (!this.isSelected) {
+    //   this.sphere.material.opacity = randomFloatBetween(
+    //     MIN_OPACITY,
+    //     MAX_OPACITY
+    //   );
 
-      if (this.orbitCircle) {
-        const newOpacity = randomFloatBetween(
-          MIN_ORBIT_CIRCLE_OPACITY,
-          MAX_ORBIT_CIRCLE_OPACITY
-        );
-        this.orbitCircle.material.opacity = newOpacity;
+    //   if (this.orbitCircle) {
+    //     const newOpacity = randomFloatBetween(
+    //       MIN_ORBIT_CIRCLE_OPACITY,
+    //       MAX_ORBIT_CIRCLE_OPACITY
+    //     );
+    //     this.orbitCircle.material.opacity = newOpacity;
 
-        if (this.moonOrbitCircle) {
-          this.moonOrbitCircle.material.opacity = newOpacity;
-        }
-      }
-    }
+    //     if (this.moonOrbitCircle) {
+    //       this.moonOrbitCircle.material.opacity = newOpacity;
+    //     }
+    //   }
+    // }
 
     this.selectionRing.update();
 
@@ -186,14 +188,14 @@ export default class Planet {
   onMouseOver() {
     this.isSelected = true;
 
-    this.sphere.material.opacity = 1;
-    if (this.orbitCircle) {
-      this.orbitCircle.material.opacity = 1;
+    // this.sphere.material.opacity = 1;
+    // if (this.orbitCircle) {
+    //   this.orbitCircle.material.opacity = 1;
 
-      if (this.moonOrbitCircle) {
-        this.moonOrbitCircle.material.opacity = 1;
-      }
-    }
+    //   if (this.moonOrbitCircle) {
+    //     this.moonOrbitCircle.material.opacity = 1;
+    //   }
+    // }
 
     this.selectionRing.select();
   }

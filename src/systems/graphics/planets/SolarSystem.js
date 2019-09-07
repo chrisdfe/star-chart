@@ -31,8 +31,9 @@ class SolarSystem {
 
     this.createPlanets();
     // TODO - reanme to randomStarBackdropFactory
-    // this.stars = starBackdropFactory();
-    // this.group.add(this.stars);
+    this.stars = starBackdropFactory();
+    console.log("this.stars", this.stars);
+    this.group.add(this.stars);
 
     this.selectedPlanet = null;
 

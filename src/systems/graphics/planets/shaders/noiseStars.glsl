@@ -3,10 +3,12 @@ precision mediump float;
 #endif
 
 uniform vec2 u_resolution;
-uniform float clip;
-uniform vec3 color;
-uniform float scale;
-uniform float alpha;
+uniform float u_clip;
+uniform float u_scale;
+uniform float u_opacity;
+uniform vec3 u_color;
+
+varying vec2 vUv;
 
 // 2D Random
 float random (in vec2 st) {
@@ -37,7 +39,7 @@ float noise (in vec2 st) {
     float result = mix(a, b, u.x) +
             (c - a)* u.y * (1.0 - u.x) +
             (d - b) * u.x * u.y;
-    result = result > clip ? 1.0 : 0.0;
+    result = result > u_clip ? u_opacity : 0.0;
     return result;
 }
 
@@ -46,9 +48,9 @@ void main() {
 
     // Scale the coordinate system to see
     // some noise in action
-    vec2 pos = vec2(st * scale);
+    vec2 pos = vec2(st * u_scale);
 
     // Use the noise function
     float n = noise(pos);
-    gl_FragColor = vec4(color, n == 1.0 ? alpha : 0.0);
+    gl_FragColor = vec4(u_color, n);
 }

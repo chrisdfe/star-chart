@@ -1,6 +1,8 @@
 import Tone from "tone";
 import frequencyMap from "frequency-map";
 
+import { ambiences } from "./ambience";
+
 const chromatics = Object.keys(frequencyMap)
   .filter(note => /6$/.test(note))
   .filter(note => !note.includes("#") && !note.includes("b"))
@@ -22,9 +24,8 @@ export default class Sound {
     // }, "4n");
     // loop.start("1m");
     // Tone.Transport.start();
-
     this.initSelectionSFX();
-    // this.initAmbience();
+    this.initAmbience();
   }
 
   initSelectionSFX = () => {
@@ -49,84 +50,12 @@ export default class Sound {
   };
 
   initAmbience() {
-    const drone = new Tone.Synth({
-      oscillator: {
-        type: "sine"
-      },
-      envelope: {
-        attack: 1,
-        decay: 0.1,
-        sustain: 1,
-        release: 1
-      }
-    }).toMaster();
-
-    new Tone.LFO({
-      frequency: 0.1,
-      type: "sine",
-      min: -50,
-      max: -15
-    })
-      .connect(drone.volume)
-      .start();
-
-    const drone2 = new Tone.Synth({
-      oscillator: {
-        type: "sine"
-      },
-      envelope: {
-        attack: 1,
-        decay: 0.1,
-        sustain: 1,
-        release: 1
-      }
-    }).toMaster();
-
-    new Tone.LFO({
-      frequency: 0.2,
-      type: "sine",
-      min: -50,
-      max: -15
-    })
-      .connect(drone.volume)
-      .start();
-
-    drone.triggerAttack("C2");
-    drone2.triggerAttack("A#1");
-
-    const noise = new Tone.Noise({
-      type: "brown",
-      volume: -20
-    }).start();
-
-    noise
-      .connect(
-        new Tone.AutoFilter({
-          frequency: 0.1,
-          baseFrequency: 600
-        })
-          .toMaster()
-          .start()
-      )
-      .connect(
-        new Tone.Filter({
-          type: "lowpass",
-          baseFrequency: 200
-        })
-      )
-      .connect(
-        new Tone.Filter({
-          type: "highpass",
-          baseFrequency: 800
-        })
-      );
+    this.ambience = new ambiences[0]();
+    this.ambience.start();
 
     EventBus.on("pause-state:changed", ({ paused }) => {
-      console.log("paused", paused);
       Tone.Master.mute = paused;
-      drone.volume.mute = paused;
-      drone2.volume.mute = paused;
-      noise.volume.mute = paused;
+      this.ambience.togglePause(paused);
     });
   }
 }

@@ -32,7 +32,7 @@ export default class CameraController {
       20,
       window.innerWidth / window.innerHeight,
       0.1,
-      1000
+      10000
     );
 
     this.orbitControls = new OrbitControls(
