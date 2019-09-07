@@ -1,5 +1,7 @@
 import { Group, Vector3 } from "three";
 import Planet from "./Planet";
+import PlanetGenerator from "./PlanetGenerator";
+
 import Sun from "./Sun";
 import {
   randomFloat,
@@ -9,30 +11,30 @@ import {
 
 import EventBus from "../../../EventBus";
 
-export const MIN_PLANETS = 3;
-export const MAX_PLANETS = 10;
-// TODO - move this into Planet
-export const MIN_PLANET_SIZE = 0.05;
-export const MAX_PLANET_SIZE = 0.2;
-export const MIN_ORBIT_DIFFERENCE = 0.01;
-export const MAX_ORBIT_DIFFERENCE = 2;
-
 import { starBackdropFactory } from "./factories";
 
 class SolarSystem {
+  static MIN_PLANETS = 3;
+  static MAX_PLANETS = 10;
+  // TODO - move this into Planet
+  static MIN_PLANET_SIZE = 0.05;
+  static MAX_PLANET_SIZE = 0.2;
+  static MIN_ORBIT_DIFFERENCE = 0.01;
+  static MAX_ORBIT_DIFFERENCE = 2;
+
   constructor() {
     this.group = new Group();
     this.entity = this.group;
 
     this.sun = new Sun({
-      size: 1
+      size: 2
     });
-    this.group.add(this.sun.entity);
+    console.log("this.sun", this.sun);
+    this.add(this.sun.entity);
 
     this.createPlanets();
     // TODO - reanme to randomStarBackdropFactory
     this.stars = starBackdropFactory();
-    console.log("this.stars", this.stars);
     this.group.add(this.stars);
 
     this.selectedPlanet = null;
@@ -86,29 +88,16 @@ class SolarSystem {
   };
 
   createPlanets() {
+    const { MIN_PLANETS, MAX_PLANETS } = SolarSystem;
     const planetCount = randomIntegerBetween(MIN_PLANETS, MAX_PLANETS);
 
-    // TODO - base off of the size of the sun
-    let currentOrbitSize =
-      this.sun.size +
-      randomFloatBetween(MIN_ORBIT_DIFFERENCE, MAX_ORBIT_DIFFERENCE);
-
-    this.planets = [...new Array(planetCount)].map((num, index) => {
-      const size = randomFloatBetween(MIN_PLANET_SIZE, MAX_PLANET_SIZE);
-      const orbitSize = randomFloatBetween(
-        currentOrbitSize + size + MIN_ORBIT_DIFFERENCE,
-        currentOrbitSize + size + MAX_ORBIT_DIFFERENCE
-      );
-      currentOrbitSize = orbitSize + size;
-      const order = index + 1;
-
-      return new Planet({
-        name: `Planet #${order}`,
-        order,
-        size,
-        orbitSize
-      });
-    });
+    this.planets = [...new Array(planetCount)].map((num, index) =>
+      PlanetGenerator.generate({
+        solarSystem: this,
+        planetCount,
+        planetIndex: index
+      })
+    );
 
     this.planets.forEach(planet => {
       this.group.add(planet.entity);

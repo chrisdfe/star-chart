@@ -13,17 +13,10 @@ import {
   Math as ThreeMath
 } from "three";
 
-import Moon from "./Moon";
 import SelectionRing from "./SelectionRing";
 
 import uuid4 from "uuid4";
 import * as Colors from "../Colors";
-import {
-  randomFloat,
-  randomRotation,
-  randomFloatBetween,
-  randomItemInArray
-} from "../../../randomUtils";
 
 import EventBus from "../../../EventBus";
 
@@ -51,13 +44,14 @@ export default class Planet {
     const { MIN_ORBIT_SPEED, MAX_ORBIT_SPEED, PLANET_COLORS } = Planet;
 
     const {
-      name,
+      name = "Unnamed Planet",
       size = 1,
-      color = randomItemInArray(PLANET_COLORS),
-      orbitSize = 2,
-      startRotation = randomRotation(),
-      rotationSpeed = randomFloatBetween(MIN_ORBIT_SPEED, MAX_ORBIT_SPEED),
-      order = 1
+      color = 0xffaaff,
+      orbitSize = 0,
+      startRotation = 0,
+      rotationSpeed = 1,
+      planetIndex = -1,
+      moons = []
     } = options;
 
     Object.assign(this, {
@@ -67,7 +61,8 @@ export default class Planet {
       orbitSize,
       startRotation,
       rotationSpeed,
-      order
+      planetIndex,
+      moons
     });
 
     this.initializeInteractivity();
@@ -75,14 +70,14 @@ export default class Planet {
   }
 
   initializeInteractivity = () => {
-    const { name, order } = this;
+    const { name, planetIndex } = this;
     this.isSelected = false;
     this.mouseover = false;
 
     // TODO - rename this to 'interactable' or something
     this.uiObject = {
       name,
-      order,
+      order: planetIndex,
       type: "planet",
       isInteractable: true,
       id: uuid4(),
@@ -130,6 +125,7 @@ export default class Planet {
         "sphereWrapperGroup is required to call initializeMapRings"
       );
     }
+
     const { size } = this;
     this.mapRings = new Group();
     const verticalMapRingCount = Math.floor(size * 10);
@@ -174,15 +170,9 @@ export default class Planet {
       throw new Error("sphereWrapperGroup is required to call initializeMoons");
     }
 
-    this.moons = [];
-    const hasMoon = randomFloat() > 0.4;
-
-    if (hasMoon) {
-      this.moons.push(new Moon());
-      this.moons.forEach(moon => {
-        this.sphereWrapperGroup.add(moon.entity);
-      });
-    }
+    this.moons.forEach(moon => {
+      this.sphereWrapperGroup.add(moon.entity);
+    });
   }
 
   update() {
