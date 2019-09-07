@@ -81,6 +81,7 @@ export default class Moon {
   }
 
   update() {
+    // TODO - adjust roation speed
     // this.moonOrbitCircle.entity.rotateY(
     //   -ThreeMath.degToRad(1 * this.parent.rotationSpeed)
     // );

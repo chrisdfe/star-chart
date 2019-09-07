@@ -2,7 +2,8 @@ import { Group, Vector3 } from "three";
 import Planet from "./Planet";
 import PlanetGenerator from "./PlanetGenerator";
 
-import Sun from "./Sun";
+import SunGenerator from "./SunGenerator";
+
 import {
   randomFloat,
   randomFloatBetween,
@@ -26,10 +27,7 @@ class SolarSystem {
     this.group = new Group();
     this.entity = this.group;
 
-    this.sun = new Sun({
-      size: 2
-    });
-    console.log("this.sun", this.sun);
+    this.sun = SunGenerator.generate();
     this.add(this.sun.entity);
 
     this.createPlanets();

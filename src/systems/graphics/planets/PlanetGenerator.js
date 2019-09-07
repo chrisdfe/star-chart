@@ -8,7 +8,7 @@ import {
 
 import SolarSystem from "./SolarSystem";
 import Planet from "./Planet";
-import Moon from "./Moon";
+import MoonGenerator from "./MoonGenerator";
 
 export default class PlanetGenerator {
   static generate = params => {
@@ -104,7 +104,8 @@ export default class PlanetGenerator {
 
     if (hasMoons) {
       // TODO - MoonGenerator
-      this.planetMoons.push(new Moon());
+      const moon = MoonGenerator.generate();
+      this.planetMoons.push(moon);
     }
   };
 }

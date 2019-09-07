@@ -26,7 +26,7 @@ import {
 } from "./controllers";
 
 import * as Colors from "./Colors";
-import SolarSystem from "./planets/SolarSystem";
+import SolarSystemGenerator from "./planets/SolarSystemGenerator";
 
 import EventBus from "../../EventBus";
 
@@ -55,7 +55,7 @@ export default class Graphics {
   };
 
   initPlanets = () => {
-    this.solarSystem = new SolarSystem();
+    this.solarSystem = SolarSystemGenerator.generate();
     this.scene.add(this.solarSystem.entity);
   };
 
