@@ -13,6 +13,7 @@ import {
   Math as ThreeMath
 } from "three";
 
+import OrbitCircle from "./OrbitCircle";
 import {
   randomFloat,
   randomFloatBetween,
@@ -26,6 +27,7 @@ import {
   createPlanetSphere
 } from "./utils";
 
+// TODO - clean this whole file up and have Moon inherit Planet
 export default class Moon {
   static MIN_MOON_ORBIT_SPEED = 0.4;
   static MAX_MOON_ORBIT_SPEED = 0.9;
@@ -64,12 +66,11 @@ export default class Moon {
       MAX_MOON_ORBIT_SIZE
     );
 
-    this.moonOrbitCircle = createOrbitCircle({
-      geometry: {
-        radius: moonRadius
-      }
+    this.moonOrbitCircle = new OrbitCircle({
+      parent: this,
+      orbitSize: moonRadius
     });
-    this.group.add(this.moonOrbitCircle);
+    this.group.add(this.moonOrbitCircle.entity);
 
     this.moonSphereWrapperGroup = new Group();
     const moonSize = randomFloatBetween(MIN_MOON_SIZE, MAX_MOON_SIZE);
@@ -80,6 +81,9 @@ export default class Moon {
   }
 
   update() {
+    // this.moonOrbitCircle.entity.rotateY(
+    //   -ThreeMath.degToRad(1 * this.parent.rotationSpeed)
+    // );
     this.moonSphereWrapperGroup.rotateY(
       ThreeMath.degToRad(1 * this.moonRotationSpeed)
     );

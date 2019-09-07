@@ -27,8 +27,8 @@ import {
 } from "./utils";
 
 export default class SelectionRing {
-  static MIN_OPACITY = 0.6;
-  static MAX_OPACITY = 0.9;
+  static MIN_SELECTED_OPACITY = 0.6;
+  static MAX_SELECTED_OPACITY = 0.9;
   static ROTATION_SPEED = -0.5;
   static COLOR = 0xffffff;
 
@@ -78,20 +78,35 @@ export default class SelectionRing {
 
   select() {
     this.isSelected = true;
-    this.material.opacity = SelectionRing.MAX_OPACITY;
   }
 
   deselect() {
     this.isSelected = false;
-    this.material.opacity = 0;
   }
 
   update() {
-    if (!this.isSelected) return;
-    const { MIN_OPACITY, MAX_OPACITY, ROTATION_SPEED } = SelectionRing;
-    this.group.rotateY(ThreeMath.degToRad(1 * ROTATION_SPEED));
-
-    const newOpacity = randomFloatBetween(MIN_OPACITY, MAX_OPACITY);
-    this.material.opacity = newOpacity;
+    this.updateOpacity();
+    this.updateRotation();
   }
+
+  updateOpacity = () => {
+    const { MIN_SELECTED_OPACITY, MAX_SELECTED_OPACITY } = SelectionRing;
+    let newOpacity;
+
+    if (this.isSelected) {
+      newOpacity = randomFloatBetween(
+        MIN_SELECTED_OPACITY,
+        MAX_SELECTED_OPACITY
+      );
+      // newOpacity = 1;
+    } else {
+      newOpacity = 0;
+    }
+    this.material.opacity = newOpacity;
+  };
+
+  updateRotation = () => {
+    const { ROTATION_SPEED } = SelectionRing;
+    this.group.rotateY(ThreeMath.degToRad(1 * ROTATION_SPEED));
+  };
 }

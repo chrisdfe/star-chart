@@ -63,6 +63,7 @@ export default class PlanetGenerator {
 
   generatePlanetColor = () => {
     const { PLANET_COLORS } = Planet;
+    // TODO - use solar system type to determine this.
     this.planetColor = randomItemInArray(PLANET_COLORS);
   };
 

@@ -91,6 +91,21 @@ export const createOrbitCircle = ({
   return line;
 };
 
+export const createMapRing = ({
+  geometry: geometryParams,
+  material: materialParams
+} = {}) => {
+  const geometry = createCircleGeometry({
+    segmentCount: 32,
+    ...geometryParams
+  });
+  const material = createOrbitLineMaterial({ ...materialParams });
+
+  const line = new Line(geometry, material);
+  line.computeLineDistances();
+  return line;
+};
+
 export const createPlanetSphere = ({
   color = 0xffffff,
   size = 1,
