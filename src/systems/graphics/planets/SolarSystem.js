@@ -106,10 +106,10 @@ class SolarSystem {
     this.group.add(entity);
   }
 
-  update() {
+  update(payload) {
     this.group.updateMatrixWorld();
     this.planets.forEach(planet => {
-      planet.update();
+      planet.update(payload);
     });
   }
 }

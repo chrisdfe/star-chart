@@ -7,6 +7,7 @@ const createNoiseShaderMaterial = ({
   scale = 200,
   alpha = 1.0
 } = {}) => {
+  // TODO - decide on a convention for this (prefixed with u_ or not)
   const uniforms = {
     u_resolution: {
       type: "v2",

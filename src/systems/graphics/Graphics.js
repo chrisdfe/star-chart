@@ -31,6 +31,8 @@ import SolarSystemGenerator from "./planets/SolarSystemGenerator";
 import EventBus from "../../EventBus";
 
 export default class Graphics {
+  previousRenderFrame = 0;
+
   constructor() {
     this.scene = new Scene();
 
@@ -59,17 +61,28 @@ export default class Graphics {
     this.scene.add(this.solarSystem.entity);
   };
 
-  render = () => {
+  createRenderPayload = time => {
+    const { previousRenderFrame } = this;
+    this.previousRenderFrame = time;
+    return {
+      current: time,
+      previous: previousRenderFrame,
+      diff: time - previousRenderFrame
+    };
+  };
+
+  render = (time = 0) => {
+    const payload = this.createRenderPayload(time);
     requestAnimationFrame(this.render);
 
     if (this.isPaused) return;
     this.scene.updateMatrixWorld();
     this.renderer.render(this.scene, this.cameraController.camera);
 
-    this.cameraController.update();
-    this.inputController.update();
+    this.cameraController.update(payload);
+    this.inputController.update(payload);
 
     // this.effectComposer.render(this.clock.getDelta());
-    this.solarSystem.update();
+    this.solarSystem.update(payload);
   };
 }

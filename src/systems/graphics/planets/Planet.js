@@ -67,6 +67,8 @@ export default class Planet {
   static MIN_OPACITY = 0.8;
   static MAX_OPACITY = 0.9;
 
+  elapsed = 0;
+
   constructor(options = {}) {
     const {
       name = "Unnamed Planet",
@@ -76,6 +78,7 @@ export default class Planet {
       startRotation = 0,
       rotationSpeed = 1,
       planetIndex = -1,
+      selectable = true,
       moons = []
     } = options;
 
@@ -87,10 +90,13 @@ export default class Planet {
       startRotation,
       rotationSpeed,
       planetIndex,
+      selectable,
       moons
     });
 
-    this.initializeInteractivity();
+    if (selectable) {
+      this.initializeInteractivity();
+    }
     this.initializePlanetGroup();
   }
 
@@ -126,8 +132,11 @@ export default class Planet {
     this.sphereWrapperGroup.add(this.sphere);
 
     this.initializeMapRings();
-    this.initializeSelectionRing();
     this.initializeMoons();
+
+    if (this.selectable) {
+      this.initializeSelectionRing();
+    }
 
     this.planetGroup.add(this.sphereWrapperGroup);
     this.group.add(this.planetGroup);
@@ -197,26 +206,38 @@ export default class Planet {
     });
   };
 
-  update = () => {
-    const {
-      MIN_OPACITY,
-      MAX_OPACITY,
-      MIN_ORBIT_CIRCLE_OPACITY,
-      MAX_ORBIT_CIRCLE_OPACITY
-    } = Planet;
+  update = ({ diff }) => {
+    this.elapsed += diff;
 
+    this.updateSelectionRing();
+    this.updateOrbitCircle();
+
+    // Add some jitteriness to orbit
+    if (this.elapsed > 120) {
+      this.elapsed = 0;
+
+      this.orbit();
+      this.updateOpacity();
+
+      this.updateMoons();
+    }
+  };
+
+  orbit = () => {
     this.planetGroup.rotateY(ThreeMath.degToRad(1 * this.rotationSpeed));
+  };
 
-    if (!this.isSelected) {
-      this.sphere.material.opacity = randomFloatBetween(
-        MIN_OPACITY,
-        MAX_OPACITY
-      );
+  updateOpacity = () => {
+    const { MIN_OPACITY, MAX_OPACITY } = Planet;
+
+    let newOpacity;
+    if (this.isSelected) {
+      newOpacity = MAX_OPACITY;
+    } else {
+      newOpacity = randomFloatBetween(MIN_OPACITY, MAX_OPACITY);
     }
 
-    this.updateOrbitCircle();
-    this.updateSelectionRing();
-    this.updateMoons();
+    this.sphere.material.opacity = newOpacity;
   };
 
   updateOrbitCircle() {
