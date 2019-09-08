@@ -43,7 +43,8 @@ export default class Sound {
     this.selectionSFXSynth.volume.value = -10;
 
     EventBus.on("planet:mouseover", ({ selectedPlanet }) => {
-      const index = selectedPlanet.order + 1 || -1;
+      console.log("selectedPlanet", selectedPlanet);
+      const index = selectedPlanet.planetIndex;
       const note = 400 + 150 * index;
       this.selectionSFXSynth.triggerAttackRelease(note, ".01");
     });

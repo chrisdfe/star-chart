@@ -1,6 +1,6 @@
 import SimplexNoise from "simplex-noise";
 
-import { seed, randomFloat } from "../../../../randomUtils";
+import { seed, randomFloat } from "../../../../../randomUtils";
 
 const rgbaByte = ({ r = 0, g = 0, b = 0, a = 0 }) => [r, g, b, a];
 

@@ -100,9 +100,10 @@ export default class Planet {
     this.mouseover = false;
 
     // TODO - rename this to 'interactable' or something
+    // TODO - interactable should be generic; have attached 'data' object
+    // that has whatever in it (e.g order)
     this.uiObject = {
       name,
-      order: planetIndex,
       type: "planet",
       isInteractable: true,
       id: uuid4(),
@@ -186,7 +187,7 @@ export default class Planet {
     this.sphereWrapperGroup.add(this.selectionRing.entity);
   };
 
-  initializeMoons() {
+  initializeMoons = () => {
     if (!this.sphereWrapperGroup) {
       throw new Error("sphereWrapperGroup is required to call initializeMoons");
     }
@@ -194,9 +195,9 @@ export default class Planet {
     this.moons.forEach(moon => {
       this.sphereWrapperGroup.add(moon.entity);
     });
-  }
+  };
 
-  update() {
+  update = () => {
     const {
       MIN_OPACITY,
       MAX_OPACITY,
@@ -216,7 +217,7 @@ export default class Planet {
     this.updateOrbitCircle();
     this.updateSelectionRing();
     this.updateMoons();
-  }
+  };
 
   updateOrbitCircle() {
     if (!this.orbitCircle) return;

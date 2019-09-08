@@ -1,5 +1,5 @@
 import { Vector2, Vector3, Color, ShaderMaterial } from "three";
-import fragmentShader from "../shaders/noise.glsl";
+import fragmentShader from "./shaders/noise.glsl";
 
 const createNoiseShaderMaterial = ({
   clip = 0.4,

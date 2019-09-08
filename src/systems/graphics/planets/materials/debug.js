@@ -1,6 +1,6 @@
 import { Clock, Color, Vector2, Vector3, ShaderMaterial } from "three";
 // import fragmentShader from "./gradient.glsl";
-import fragmentShader from "../shaders/dots.glsl";
+import fragmentShader from "./shaders/dots.glsl";
 
 // GLSL expects color values to be 0-1
 const vec3FromColor = color =>

@@ -1,5 +1,5 @@
 import { Clock, Color, Vector2, Vector3, ShaderMaterial } from "three";
-import fragmentShader from "../shaders/dots.glsl";
+import fragmentShader from "./shaders/dots.glsl";
 import { vec3FromColor } from "./utils";
 
 const createDotsShaderMaterial = ({

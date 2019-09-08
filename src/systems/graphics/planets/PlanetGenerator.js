@@ -37,7 +37,6 @@ export default class PlanetGenerator {
     this.generatePlanetRotationSpeed();
     this.generatePlanetMoons();
 
-    const order = planetIndex + 1;
     const startRotation = randomRotation();
 
     const {
@@ -56,7 +55,7 @@ export default class PlanetGenerator {
       rotationSpeed: planetRotationSpeed,
       startRotation,
       orbitSize,
-      order,
+      planetIndex,
       moons: planetMoons
     });
   };
