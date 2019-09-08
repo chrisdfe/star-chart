@@ -31,7 +31,7 @@ import {
 } from "./utils";
 
 // TODO - map ring should be its own class
-export const createMapRingMaterial = (params = {}) =>
+const createMapRingMaterial = (params = {}) =>
   new LineDashedMaterial({
     color: 0xffffff,
     opacity: 0.4,
@@ -43,7 +43,7 @@ export const createMapRingMaterial = (params = {}) =>
     ...params
   });
 
-export const createMapRing = ({
+const createMapRing = ({
   geometry: geometryParams,
   material: materialParams
 } = {}) => {
@@ -62,10 +62,15 @@ export default class Planet {
   static MIN_ORBIT_SPEED = 0.05;
   static MAX_ORBIT_SPEED = 0.15;
 
-  static PLANET_COLORS = [0xd7e7e8, 0xafc8c9, 0xafc8c9];
+  static MIN_PLANET_SIZE = 0.05;
+  static MAX_PLANET_SIZE = 0.2;
+  static MIN_ORBIT_DIFFERENCE = 0.01;
+  static MAX_ORBIT_DIFFERENCE = 2;
 
   static MIN_OPACITY = 0.8;
   static MAX_OPACITY = 0.9;
+
+  static PLANET_COLORS = [0xd7e7e8, 0xafc8c9, 0xafc8c9];
 
   elapsed = 0;
 

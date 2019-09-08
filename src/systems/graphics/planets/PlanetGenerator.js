@@ -6,7 +6,6 @@ import {
   randomItemInArray
 } from "../../../randomUtils";
 
-import SolarSystem from "./SolarSystem";
 import Planet from "./Planet";
 import MoonGenerator from "./MoonGenerator";
 
@@ -67,13 +66,13 @@ export default class PlanetGenerator {
   };
 
   generatePlanetSize = () => {
-    const { MIN_PLANET_SIZE, MAX_PLANET_SIZE } = SolarSystem;
+    const { MIN_PLANET_SIZE, MAX_PLANET_SIZE } = Planet;
     this.planetSize = randomFloatBetween(MIN_PLANET_SIZE, MAX_PLANET_SIZE);
   };
 
   generateOrbitSize = () => {
     const { solarSystem, planetIndex, planetSize } = this;
-    const { MIN_ORBIT_DIFFERENCE, MAX_ORBIT_DIFFERENCE } = SolarSystem;
+    const { MIN_ORBIT_DIFFERENCE, MAX_ORBIT_DIFFERENCE } = Planet;
 
     const currentOrbitSize =
       solarSystem.sun.size + MAX_ORBIT_DIFFERENCE * planetIndex;

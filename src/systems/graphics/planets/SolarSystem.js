@@ -10,18 +10,15 @@ import {
   randomIntegerBetween
 } from "../../../randomUtils";
 
+import { Enum } from "./utils";
+
 import EventBus from "../../../EventBus";
 
 import { starBackdropFactory } from "./factories";
 
-class SolarSystem {
+export default class SolarSystem {
   static MIN_PLANETS = 3;
   static MAX_PLANETS = 10;
-  // TODO - move this into Planet
-  static MIN_PLANET_SIZE = 0.05;
-  static MAX_PLANET_SIZE = 0.2;
-  static MIN_ORBIT_DIFFERENCE = 0.01;
-  static MAX_ORBIT_DIFFERENCE = 2;
 
   constructor() {
     this.group = new Group();
@@ -113,5 +110,3 @@ class SolarSystem {
     });
   }
 }
-
-export default SolarSystem;
