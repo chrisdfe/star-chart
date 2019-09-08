@@ -17,15 +17,8 @@ import EventBus from "../../EventBus";
 
 export default class Sound {
   constructor() {
-    //create a synth and connect it to the master output (your speakers)
-    // const synth = new Tone.Synth().toMaster();
-    // const loop = new Tone.Loop(function(time) {
-    //   synth.triggerAttackRelease("C2", "8n", time);
-    // }, "4n");
-    // loop.start("1m");
-    // Tone.Transport.start();
-    this.initSelectionSFX();
-    this.initAmbience();
+    // this.initSelectionSFX();
+    // this.initAmbience();
   }
 
   initSelectionSFX = () => {
@@ -43,7 +36,6 @@ export default class Sound {
     this.selectionSFXSynth.volume.value = -10;
 
     EventBus.on("planet:mouseover", ({ selectedPlanet }) => {
-      console.log("selectedPlanet", selectedPlanet);
       const index = selectedPlanet.planetIndex;
       const note = 400 + 150 * index;
       this.selectionSFXSynth.triggerAttackRelease(note, ".01");
