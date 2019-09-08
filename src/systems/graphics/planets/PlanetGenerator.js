@@ -9,6 +9,7 @@ import {
 import Planet from "./Planet";
 import MoonGenerator from "./MoonGenerator";
 
+// TODO - this file should go somewhere else since it's not coupled to Graphics
 export default class PlanetGenerator {
   static generate = params => {
     return new PlanetGenerator().generate(params);

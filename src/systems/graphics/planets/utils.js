@@ -87,3 +87,10 @@ export const createPlanetSphere = ({
 
   return new Mesh(geometry, material);
 };
+
+export const Enum = values => {
+  return values.reduce(
+    (accumulator, key) => ({ ...accumulator, [key]: key }),
+    {}
+  );
+};
