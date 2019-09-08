@@ -1,6 +1,31 @@
-import { randomFloatBetween } from "../../../randomUtils";
+import { LineDashedMaterial, Line } from "three";
 
-import { createOrbitCircle } from "./utils";
+import { randomFloatBetween } from "../../../randomUtils";
+import { createCircleGeometry } from "./utils";
+
+const createOrbitCircle = ({
+  geometry: geometryParams,
+  material: materialParams
+} = {}) => {
+  const geometry = createCircleGeometry({
+    segmentCount: 32,
+    ...geometryParams
+  });
+  const material = new LineDashedMaterial({
+    color: 0xffffff,
+    opacity: 0.4,
+    transparent: true,
+    linewidth: 1,
+    dashSize: 0.1,
+    gapSize: 0.05,
+    depthWrite: false,
+    ...materialParams
+  });
+
+  const line = new Line(geometry, material);
+  line.computeLineDistances();
+  return line;
+};
 
 export default class OrbitCircle {
   static MIN_DESELECTED_OPACITY = 0.2;

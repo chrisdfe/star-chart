@@ -12,11 +12,9 @@ import * as THREE from "three";
 
 import { getNoiseImageData } from "./imageData";
 
-export const createDebugPlanetTexture = () => {
-  const pixels = 128;
-  const aspectRadio = pixels / 1;
-  const arr = getNoiseImageData(pixels);
-  // const arr = getDebugImageData();
+export const createDebugPlanetTexture = ({ size = 32 } = {}) => {
+  const aspectRadio = size / 1;
+  const arr = getNoiseImageData(size);
   const repeat = 8;
 
   const texture = new Texture(arr);

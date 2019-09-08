@@ -22,7 +22,6 @@ import {
 import {
   createOrbitLineMaterial,
   createCircleGeometry,
-  createOrbitCircle,
   createPlanetSphere
 } from "./utils";
 

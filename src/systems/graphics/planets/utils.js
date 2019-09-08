@@ -26,19 +26,6 @@ import {
   createNoiseShaderMaterial
 } from "./materials";
 
-export const createOrbitLineMaterial = (params = {}) =>
-  new LineDashedMaterial({
-    color: 0xffffff,
-    opacity: 0.4,
-    transparent: true,
-    linewidth: 1,
-    scale: 1,
-    dashSize: 0.1,
-    gapSize: 0.05,
-    depthWrite: false,
-    ...params
-  });
-
 export const createCircleGeometry = ({
   radius = 2,
   segmentCount = 64
@@ -76,40 +63,14 @@ export const createCircleLine = ({
   return new Line(geometry, material);
 };
 
-export const createOrbitCircle = ({
-  geometry: geometryParams,
-  material: materialParams
-} = {}) => {
-  const geometry = createCircleGeometry({
-    segmentCount: 32,
-    ...geometryParams
-  });
-  const material = createOrbitLineMaterial({ ...materialParams });
-
-  const line = new Line(geometry, material);
-  line.computeLineDistances();
-  return line;
-};
-
-export const createMapRing = ({
-  geometry: geometryParams,
-  material: materialParams
-} = {}) => {
-  const geometry = createCircleGeometry({
-    segmentCount: 32,
-    ...geometryParams
-  });
-  const material = createOrbitLineMaterial({ ...materialParams });
-
-  const line = new Line(geometry, material);
-  line.computeLineDistances();
-  return line;
-};
-
+// TODO - refactor this to accept a 'texture' param for resuability
+// TODO - factor in planet size when creating texture
+// TODO - factor in planet size for polygons (smaller planets = fewer)
 export const createPlanetSphere = ({
   color = 0xffffff,
   size = 1,
-  polygons = 16
+  polygons = 16,
+  opacity = 0.4
 } = {}) => {
   const geometry = new SphereGeometry(size, polygons, polygons);
 
@@ -119,18 +80,10 @@ export const createPlanetSphere = ({
     transparent: true,
     opacity: 0.4,
     // alphaTest: 1,
-    depthWrite: false
-    // alphaMap: createDebugPlanetTexture()
-    // displacementMap: createDebugPlanetTexture()
-    // image: createDebugPlanetTexture()
+    depthWrite: false,
+    alphaMap: createDebugPlanetTexture()
+    // map: createDebugPlanetTexture()
   });
-
-  // const material = createLinesShaderMaterial();
-  // const material = createNoiseShaderMaterial({
-  //   scale: 10000,
-  //   color: new Color(255, 255, 255),
-  //   alpha: 0.8
-  // });
 
   return new Mesh(geometry, material);
 };

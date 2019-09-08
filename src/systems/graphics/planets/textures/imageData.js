@@ -6,6 +6,8 @@ const rgbaByte = ({ r = 0, g = 0, b = 0, a = 0 }) => [r, g, b, a];
 
 const rgbByteToAlpha = (...args) => rgbaByte({ ...args, a: 255.0 });
 
+const simplex = new SimplexNoise(seed);
+
 const alphaRGBByte = alpha => rgbaByte({ a: alpha });
 const grayscaleRGBAByte = value =>
   rgbaByte({ r: value * 255, g: value * 255, b: value * 255, a: 255 });
@@ -50,8 +52,6 @@ export const getDebugImageData = ({ width = 4 } = {}) => {
   return getImageDataFrom(DEBUG_IMAGE_DATA_ARRAY, width, width / 2);
 };
 
-const simplex = new SimplexNoise(seed);
-
 export const getNoiseImageData = (width = 4) => {
   const height = width / 2;
   let arr = [];
@@ -59,7 +59,6 @@ export const getNoiseImageData = (width = 4) => {
   for (let x = 0; x < width; x += 1) {
     for (let y = 0; y < height; y += 1) {
       const alpha = Math.abs(simplex.noise2D(x, y));
-      // const alpha = randomFloat();
       arr.push(alpha);
     }
   }

@@ -26,10 +26,37 @@ import EventBus from "../../../EventBus";
 import {
   createOrbitLineMaterial,
   createCircleGeometry,
-  createMapRing,
   createPlanetSphere,
   createCircleLine
 } from "./utils";
+
+// TODO - map ring should be its own class
+export const createMapRingMaterial = (params = {}) =>
+  new LineDashedMaterial({
+    color: 0xffffff,
+    opacity: 0.4,
+    transparent: true,
+    linewidth: 1,
+    dashSize: 0.1,
+    gapSize: 0.05,
+    depthWrite: false,
+    ...params
+  });
+
+export const createMapRing = ({
+  geometry: geometryParams,
+  material: materialParams
+} = {}) => {
+  const geometry = createCircleGeometry({
+    segmentCount: 32,
+    ...geometryParams
+  });
+  const material = createMapRingMaterial({ ...materialParams });
+
+  const line = new Line(geometry, material);
+  line.computeLineDistances();
+  return line;
+};
 
 export default class Planet {
   static MIN_ORBIT_SPEED = 0.05;
