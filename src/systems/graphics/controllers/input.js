@@ -22,10 +22,6 @@ export default class InputController {
     this.raycaster = new Raycaster();
     this.raycaster.linePrecision = 0.2;
 
-    window.addEventListener("resize", () => {
-      this.parent.renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
     window.addEventListener("mousemove", event => {
       this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;

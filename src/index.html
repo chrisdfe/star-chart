@@ -13,12 +13,34 @@
         padding: 0;
         margin: 0;
         overflow: hidden;
+        /*background-color: #03191e;*/
+        height: 100%;
+      }
+      body {
+        position: relative;
       }
       #vertex,
       #fragment {
         display: none;
       }
-
+      #star-chart-canvas-wrapper {
+        position: absolute;
+        top: 42px;
+        right: 42px;
+        bottom: 42px;
+        left: 42px;
+        /*display: none;*/
+      }
+      /*#star-chart-canvas-wrapper canvas {
+        border: 0.5px solid #fff;
+      }*/
+      #frame-wrapper {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
       .ui-wrapper {
         color: #fff;
         font-family: "Roboto Mono", monospace;
@@ -32,14 +54,14 @@
         padding: 10px;
         transform: translateX(-50%);
       }
-
-      .ui-planet-name.is-visible {
-      }
     </style>
   </head>
   <body>
-    <div class="ui-wrapper">
-      <div class="ui-planet-name">test</div>
+    <div id="frame-wrapper"></div>
+    <div id="star-chart-canvas-wrapper">
+      <div class="ui-wrapper">
+        <div class="ui-planet-name">test</div>
+      </div>
     </div>
   </body>
 </html>

@@ -19,7 +19,7 @@ import {
   RepeatWrapping
 } from "three";
 
-import { createDebugPlanetTexture } from "./textures";
+import { createDebugPlanetTexture } from "./materials/textures";
 import {
   createDotsShaderMaterial,
   createLinesShaderMaterial,
@@ -47,7 +47,6 @@ export const createCircleLine = ({
   material: materialParams
 } = {}) => {
   const geometry = createCircleGeometry({
-    // radius: size + 0.0001,
     radius: 3,
     segmentCount: 32,
     ...geometryParams

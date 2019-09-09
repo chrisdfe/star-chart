@@ -20,7 +20,7 @@ import {
   randomRotation
 } from "../../../../randomUtils";
 
-import { noiseStars, flat } from "../shaders";
+import { noiseStars, flat } from "../materials/shaders";
 
 // GLSL expects color values to be 0-1
 const vec3FromColor = color =>
