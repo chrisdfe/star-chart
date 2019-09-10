@@ -27,7 +27,7 @@ import {
 
 import * as Colors from "./Colors";
 import SolarSystemGenerator from "./planets/SolarSystemGenerator";
-import FrameRenderer from "./FrameRenderer";
+import FrameRenderer from "./frame/FrameRenderer";
 
 import EventBus from "../../EventBus";
 
