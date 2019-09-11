@@ -7,7 +7,7 @@ export default class SunGenerator {
 
   generate = params => {
     return new Sun({
-      size: 2
+      size: 1.2
     });
   };
 }

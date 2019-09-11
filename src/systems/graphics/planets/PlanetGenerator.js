@@ -34,27 +34,30 @@ export default class PlanetGenerator {
     this.generateOrbitSize();
     this.generatePlanetName();
     this.generatePlanetColor();
+    this.generatePlanetOrbitSpeed();
     this.generatePlanetRotationSpeed();
     this.generatePlanetMoons();
 
-    const startRotation = randomRotation();
+    const planetStartRotation = randomRotation();
 
     const {
       planetSize,
       planetColor,
       planetName,
+      planetOrbitSpeed,
       planetRotationSpeed,
-      planetMoons,
-      orbitSize
+      planetOrbitSize,
+      planetMoons
     } = this;
 
     return new Planet({
       name: planetName,
       size: planetSize,
       color: planetColor,
+      orbitSize: planetOrbitSize,
+      orbitSpeed: planetOrbitSpeed,
+      startRotation: planetStartRotation,
       rotationSpeed: planetRotationSpeed,
-      startRotation,
-      orbitSize,
       planetIndex,
       moons: planetMoons
     });
@@ -78,7 +81,7 @@ export default class PlanetGenerator {
     const currentOrbitSize =
       solarSystem.sun.size + MAX_ORBIT_DIFFERENCE * planetIndex;
 
-    this.orbitSize = randomFloatBetween(
+    this.planetOrbitSize = randomFloatBetween(
       currentOrbitSize + planetSize + MIN_ORBIT_DIFFERENCE,
       currentOrbitSize + planetSize + MAX_ORBIT_DIFFERENCE
     );
@@ -88,12 +91,21 @@ export default class PlanetGenerator {
     this.planetName = `Planet #${this.planetIndex + 1}`;
   };
 
-  generatePlanetRotationSpeed = () => {
+  generatePlanetOrbitSpeed = () => {
     const { MIN_ORBIT_SPEED, MAX_ORBIT_SPEED } = Planet;
 
-    this.planetRotationSpeed = randomFloatBetween(
+    this.planetOrbitSpeed = randomFloatBetween(
       MIN_ORBIT_SPEED,
       MAX_ORBIT_SPEED
+    );
+  };
+
+  generatePlanetRotationSpeed = () => {
+    const { MIN_ROTATION_SPEED, MAX_ROTATION_SPEED } = Planet;
+
+    this.planetRotationSpeed = randomFloatBetween(
+      MIN_ROTATION_SPEED,
+      MAX_ROTATION_SPEED
     );
   };
 

@@ -60,7 +60,10 @@ const createMapRing = ({
 
 export default class Planet {
   static MIN_ORBIT_SPEED = 0.05;
-  static MAX_ORBIT_SPEED = 0.15;
+  static MAX_ORBIT_SPEED = 0.4;
+
+  static MIN_ROTATION_SPEED = 0.5;
+  static MAX_ROTATION_SPEED = 4;
 
   static MIN_PLANET_SIZE = 0.05;
   static MAX_PLANET_SIZE = 0.2;
@@ -82,6 +85,7 @@ export default class Planet {
       orbitSize = 0,
       startRotation = 0,
       rotationSpeed = 1,
+      orbitSpeed = 1,
       planetIndex = -1,
       selectable = true,
       moons = []
@@ -94,6 +98,7 @@ export default class Planet {
       orbitSize,
       startRotation,
       rotationSpeed,
+      orbitSpeed,
       planetIndex,
       selectable,
       moons
@@ -123,7 +128,7 @@ export default class Planet {
   };
 
   initializePlanetGroup = () => {
-    const { name, color, size, orbitSize, startRotation, rotationSpeed } = this;
+    const { name, color, size, orbitSize, orbitSpeed, startRotation } = this;
     this.group = new Group();
 
     this.planetGroup = new Group();
@@ -218,10 +223,11 @@ export default class Planet {
     this.updateOrbitCircle();
 
     // Add some jitteriness to orbit
-    if (this.elapsed > 120) {
+    if (this.elapsed > 100) {
       this.elapsed = 0;
 
       this.orbit();
+      this.rotate();
       this.updateOpacity();
 
       this.updateMoons();
@@ -229,7 +235,11 @@ export default class Planet {
   };
 
   orbit = () => {
-    this.planetGroup.rotateY(ThreeMath.degToRad(1 * this.rotationSpeed));
+    this.planetGroup.rotateY(ThreeMath.degToRad(1 * this.orbitSpeed));
+  };
+
+  rotate = () => {
+    this.sphere.rotateY(ThreeMath.degToRad(1 * this.rotationSpeed));
   };
 
   updateOpacity = () => {

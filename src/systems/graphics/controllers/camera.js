@@ -41,8 +41,8 @@ export default class CameraController {
     );
 
     this.camera.position.x = 0;
-    this.camera.position.y = 25;
-    this.camera.position.z = 30;
+    this.camera.position.y = 35;
+    this.camera.position.z = 60;
 
     this.mouseOvers = [];
     this.mouseOuts = [];
