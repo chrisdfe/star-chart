@@ -48,7 +48,7 @@ export default class Graphics {
     this.cameraController = new CameraController(this);
     this.inputController = new InputController(this);
 
-    this.FrameRenderer = new FrameRenderer(this);
+    this.frameRenderer = new FrameRenderer(this);
 
     this.render();
   }
@@ -70,8 +70,8 @@ export default class Graphics {
 
   setRendererSize = () => {
     this.renderer.setSize(
-      window.innerWidth - WINDOW_FRAME_SIZE * 2,
-      window.innerHeight - WINDOW_FRAME_SIZE * 2
+      window.innerWidth - WINDOW_FRAME_SIZE * 2 + 3,
+      window.innerHeight - WINDOW_FRAME_SIZE * 2 + 3
     );
   };
 
@@ -103,5 +103,6 @@ export default class Graphics {
 
     // this.effectComposer.render(this.clock.getDelta());
     this.solarSystem.update(payload);
+    // this.frameRenderer.update(payload);
   };
 }

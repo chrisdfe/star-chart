@@ -28,6 +28,12 @@ import {
   createInsetRectLine
 } from "./utils";
 
+import {
+  randomRotation,
+  randomIntegerBetween,
+  randomFloatBetween
+} from "../../../randomUtils";
+
 const FRAME_WIDTH = 40;
 // For circles
 const FULL_FRAME_RADIUS = FRAME_WIDTH / 2;
@@ -51,6 +57,35 @@ const createZigZag = ({ size = 3, count = 10 } = {}) =>
       };
     })
   );
+
+const createStarCircle = ({
+  innerRadius = 5,
+  radius = 40,
+  crossCount = 10,
+  crossSize = 2
+} = {}) => {
+  const starCircleGroup = new Group();
+
+  const segmentCount = Math.ceil(radius / 12) * 3;
+
+  starCircleGroup.add(
+    createFullCircle(radius, { color: Colors.BACKGROUND, segmentCount })
+  );
+  starCircleGroup.add(createCircle(radius, { segmentCount }));
+  starCircleGroup.add(createCircle(innerRadius, { segmentCount }));
+
+  [...new Array(crossCount)].forEach(() => {
+    const crossGroup = new Group().add(
+      createX(crossSize, {
+        x: randomFloatBetween(innerRadius, radius - crossSize)
+      })
+    );
+    crossGroup.rotateZ(randomRotation());
+    starCircleGroup.add(crossGroup);
+  });
+
+  return starCircleGroup;
+};
 
 export default class FrameRenderer {
   constructor(graphics) {
@@ -103,13 +138,15 @@ export default class FrameRenderer {
   };
 
   initialize = () => {
-    const { width, height } = getCameraDimensions();
+    this.drawTopFrame();
+    this.drawBottomFrame();
 
-    // // Bottom
-    // {
-    //   radius: FRAME_WIDTH / 2,
-    //   position: { y: -(height / 2) + FRAME_WIDTH / 2 }
-    // }
+    // Main content area border
+    this.scene.add(createInsetRectLine(FRAME_WIDTH));
+  };
+
+  drawTopFrame = () => {
+    const { width, height } = getCameraDimensions();
 
     // Top center cirles
     const TOP_MIDDLE_CENTER = height / 2 - FULL_FRAME_RADIUS;
@@ -244,9 +281,13 @@ export default class FrameRenderer {
 
     const topLeftGroup = horizontallyReverseGroup(topRightGroup);
     this.scene.add(topLeftGroup);
+  };
 
-    // BOTTOM
+  drawBottomFrame = () => {
+    const { width, height } = getCameraDimensions();
+
     const BOTTOM_MIDDLE_CENTER = -(height / 2) + FRAME_WIDTH / 2;
+
     const bottomMiddle = new Group().add(
       createCircle(7, {
         x: 0,
@@ -265,16 +306,34 @@ export default class FrameRenderer {
     );
     this.scene.add(bottomMiddleRight);
 
+    // Circle in bottom left;
+    this.starCircleGroupUnderneath = createStarCircle({
+      radius: 150,
+      crossCount: randomIntegerBetween(8, 70)
+    });
+    this.starCircleGroupUnderneath.position.x = -(width / 2) + FRAME_WIDTH;
+    this.starCircleGroupUnderneath.position.y = -(height / 2) + FRAME_WIDTH;
+    this.scene.add(this.starCircleGroupUnderneath);
+
+    this.starCircleGroup = createStarCircle({
+      radius: FRAME_WIDTH,
+      crossCount: randomIntegerBetween(8, 20)
+    });
+    this.starCircleGroup.position.x = -(width / 2) + FRAME_WIDTH;
+    this.starCircleGroup.position.y = -(height / 2) + FRAME_WIDTH;
+    this.scene.add(this.starCircleGroup);
+
     const bottomMiddleLeft = horizontallyReverseGroup(bottomMiddleRight);
     this.scene.add(bottomMiddleLeft);
-
-    // Main content area border
-    this.scene.add(createInsetRectLine(FRAME_WIDTH));
   };
 
-  render = (time = 0) => {
-    // requestAnimationFrame(this.render);
-
+  render = () => {
     this.renderer.render(this.scene, this.camera);
+  };
+
+  update = payload => {
+    this.starCircleGroup.rotateZ(ThreeMath.degToRad(0.2));
+    this.starCircleGroupUnderneath.rotateZ(ThreeMath.degToRad(0.05));
+    this.render(payload);
   };
 }

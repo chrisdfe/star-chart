@@ -75,9 +75,12 @@ export const createInsetRectLine = (inset = 1) => {
   return createRectLine(offsets);
 };
 
-export const createCircle = (radius, { x = 0, y = 0 }) => {
+export const createCircle = (
+  radius,
+  { x = 0, y = 0, segmentCount = 12 } = {}
+) => {
   const circle = createCircleLine({
-    geometry: { radius, segmentCount: CIRCLE_SEGMENTS }
+    geometry: { radius, segmentCount }
   });
   circle.rotateX(ThreeMath.degToRad(90));
   circle.position.set(x, y, 0);
@@ -85,10 +88,13 @@ export const createCircle = (radius, { x = 0, y = 0 }) => {
   return circle;
 };
 
-export const createFullCircle = (radius, { x = 0, y = 0 }) => {
-  const geometry = new CircleGeometry(radius, CIRCLE_SEGMENTS);
+export const createFullCircle = (
+  radius,
+  { color = 0xffffff, x = 0, y = 0, segmentCount = 12 } = {}
+) => {
+  const geometry = new CircleGeometry(radius, segmentCount);
   geometry.rotateZ(ThreeMath.degToRad(90));
-  const material = new MeshBasicMaterial({ color: 0xffffff });
+  const material = new MeshBasicMaterial({ color });
   const mesh = new Mesh(geometry, material);
   mesh.position.set(x, y, 0);
   return mesh;

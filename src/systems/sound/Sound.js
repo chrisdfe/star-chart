@@ -17,8 +17,8 @@ import EventBus from "../../EventBus";
 
 export default class Sound {
   constructor() {
-    // this.initSelectionSFX();
-    // this.initAmbience();
+    this.initSelectionSFX();
+    this.initAmbience();
   }
 
   initSelectionSFX = () => {
