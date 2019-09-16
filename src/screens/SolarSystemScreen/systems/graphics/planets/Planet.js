@@ -12,16 +12,15 @@ import {
   Vector3,
   Math as ThreeMath
 } from "three";
+import uuid4 from "uuid4";
 
-import { randomFloatBetween } from "../../../randomUtils";
+import { randomFloatBetween } from "@/lib/randomUtils";
+import EventBus from "@/lib/EventBus";
+
+import * as Colors from "../Colors";
 
 import SelectionRing from "./SelectionRing";
 import OrbitCircle from "./OrbitCircle";
-
-import uuid4 from "uuid4";
-import * as Colors from "../Colors";
-
-import EventBus from "../../../EventBus";
 
 import {
   createOrbitLineMaterial,

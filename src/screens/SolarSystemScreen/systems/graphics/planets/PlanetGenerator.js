@@ -4,7 +4,7 @@ import {
   randomIntegerBetween,
   randomRotation,
   randomItemInArray
-} from "../../../randomUtils";
+} from "@/lib/randomUtils";
 
 import Planet from "./Planet";
 import MoonGenerator from "./MoonGenerator";

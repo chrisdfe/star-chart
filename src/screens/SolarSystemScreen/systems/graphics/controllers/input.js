@@ -1,6 +1,6 @@
 import { Vector3, Raycaster } from "three";
 
-import EventBus from "../../../EventBus";
+import EventBus from "@/lib/EventBus";
 
 // TODO - this should go in a common place
 const flattenChildren = children => {

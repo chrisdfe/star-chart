@@ -18,7 +18,7 @@ import {
   randomFloat,
   randomFloatBetween,
   randomRotation
-} from "../../../../randomUtils";
+} from "@/lib/randomUtils";
 
 import { noiseStars, flat } from "../materials/shaders";
 

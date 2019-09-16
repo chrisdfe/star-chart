@@ -1,11 +1,9 @@
-import GraphicsSystem from "./systems/graphics";
-import SoundSystem from "./systems/sound";
-
 import "./styles.css";
+
+import SolarSystemScreen from "./screens/SolarSystemScreen";
 
 export default class Game {
   constructor() {
-    this.graphics = new GraphicsSystem();
-    this.sounds = new SoundSystem();
+    this.currentScreen = new SolarSystemScreen().initialize();
   }
 }

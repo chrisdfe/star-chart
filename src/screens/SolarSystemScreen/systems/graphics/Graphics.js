@@ -19,6 +19,8 @@ import {
 
 import { EffectComposer, RenderPass } from "postprocessing";
 
+import EventBus from "@/lib/EventBus";
+
 import {
   CameraController,
   DOMUIController,
@@ -26,11 +28,9 @@ import {
 } from "./controllers";
 
 import * as Colors from "./Colors";
-import SolarSystemScreen from "./screens/SolarSystemScreen";
 
+import SolarSystemGenerator from "./planets/SolarSystemGenerator";
 import FrameRenderer from "./frame/FrameRenderer";
-
-import EventBus from "../../EventBus";
 
 const WINDOW_FRAME_SIZE = 42;
 
@@ -48,7 +48,9 @@ export default class Graphics {
     this.cameraController = new CameraController(this);
     this.inputController = new InputController(this);
 
-    this.currentScreen = new SolarSystemScreen(this).initialize();
+    this.solarSystem = SolarSystemGenerator.generate();
+    this.scene.add(this.solarSystem.entity);
+
     this.frameRenderer = new FrameRenderer(this);
 
     this.render();
@@ -97,7 +99,7 @@ export default class Graphics {
     this.cameraController.update(payload);
     this.inputController.update(payload);
 
-    this.currentScreen.update(payload);
+    this.solarSystem.update(this);
     // this.frameRenderer.update(payload);
   };
 }

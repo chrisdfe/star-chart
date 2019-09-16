@@ -20,7 +20,7 @@ import { Interaction } from "three.interaction";
 
 import OrbitControls from "orbit-controls-es6";
 
-import EventBus from "../../../EventBus";
+import EventBus from "@/lib/EventBus";
 
 export default class CameraController {
   constructor(parent) {

@@ -32,7 +32,7 @@ import {
   randomRotation,
   randomIntegerBetween,
   randomFloatBetween
-} from "../../../randomUtils";
+} from "@/lib/randomUtils";
 
 const FRAME_WIDTH = 40;
 // For circles

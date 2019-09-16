@@ -1,6 +1,6 @@
 import { LineDashedMaterial, Line } from "three";
 
-import { randomFloatBetween } from "../../../randomUtils";
+import { randomFloatBetween } from "@/lib/randomUtils";
 import { createCircleGeometry } from "./utils";
 
 const createOrbitCircle = ({

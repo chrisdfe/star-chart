@@ -78,15 +78,15 @@ export default class Ambience1 extends Ambience {
       );
   }
 
-  pause() {
+  pause = () => {
     this.drone.volume.mute = true;
     this.drone2.volume.mute = true;
     this.noise.volume.mute = true;
-  }
+  };
 
-  unpause() {
+  unpause = () => {
     this.drone.volume.mute = false;
     this.drone2.volume.mute = false;
     this.noise.volume.mute = false;
-  }
+  };
 }

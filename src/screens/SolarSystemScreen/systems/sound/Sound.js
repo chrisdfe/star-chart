@@ -1,6 +1,8 @@
 import Tone from "tone";
 import frequencyMap from "frequency-map";
 
+import EventBus from "@/lib/EventBus";
+
 import { ambiences } from "./ambience";
 
 const chromatics = Object.keys(frequencyMap)
@@ -13,12 +15,10 @@ const chromatics = Object.keys(frequencyMap)
     };
   }, {});
 
-import EventBus from "../../EventBus";
-
 export default class Sound {
   constructor() {
-    // this.initSelectionSFX();
-    // this.initAmbience();
+    this.initSelectionSFX();
+    this.initAmbience();
   }
 
   initSelectionSFX = () => {

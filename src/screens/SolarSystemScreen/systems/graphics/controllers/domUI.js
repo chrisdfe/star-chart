@@ -1,4 +1,4 @@
-import EventBus from "../../../EventBus";
+import EventBus from "@/lib/EventBus";
 
 export default class DOMUIController {
   constructor(parent) {

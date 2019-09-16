@@ -8,11 +8,10 @@ import {
   randomFloat,
   randomFloatBetween,
   randomIntegerBetween
-} from "../../../randomUtils";
+} from "@/lib/randomUtils";
 
+import EventBus from "@/lib/EventBus";
 import { Enum } from "./utils";
-
-import EventBus from "../../../EventBus";
 
 import { starBackdropFactory } from "./factories";
 

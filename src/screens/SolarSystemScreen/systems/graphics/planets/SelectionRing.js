@@ -17,7 +17,7 @@ import {
   randomFloat,
   randomFloatBetween,
   randomIntegerBetween
-} from "../../../randomUtils";
+} from "@/lib/randomUtils";
 
 import {
   createOrbitLineMaterial,
