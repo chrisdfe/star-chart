@@ -48,8 +48,6 @@ export default class Graphics {
     this.solarSystem = new ConstellationSynth(this).initialize();
     this.scene.add(this.solarSystem.entity);
 
-    // this.frameRenderer = new FrameRenderer(this);
-
     this.render();
   }
 
@@ -64,7 +62,6 @@ export default class Graphics {
     this.renderer.setClearColor(Colors.BACKGROUND, 1);
 
     document
-      // .querySelector("#star-chart-canvas-wrapper")
       .querySelector("#constellation-synth-canvas-wrapper")
       .appendChild(this.renderer.domElement);
   };

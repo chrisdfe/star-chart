@@ -8,6 +8,6 @@ import SoundSystem from "./systems/sound";
 export default class ConstellationSynth extends Screen {
   initialize() {
     this.graphics = new GraphicsSystem();
-    // this.sounds = new SoundSystem();
+    this.sounds = new SoundSystem();
   }
 }
