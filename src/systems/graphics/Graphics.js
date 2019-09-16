@@ -26,7 +26,8 @@ import {
 } from "./controllers";
 
 import * as Colors from "./Colors";
-import SolarSystemGenerator from "./planets/SolarSystemGenerator";
+import SolarSystemScreen from "./screens/SolarSystemScreen";
+
 import FrameRenderer from "./frame/FrameRenderer";
 
 import EventBus from "../../EventBus";
@@ -40,7 +41,6 @@ export default class Graphics {
     this.scene = new Scene();
 
     this.initRenderer();
-    this.initPlanets();
 
     this.isPaused = false;
 
@@ -48,6 +48,7 @@ export default class Graphics {
     this.cameraController = new CameraController(this);
     this.inputController = new InputController(this);
 
+    this.currentScreen = new SolarSystemScreen(this).initialize();
     this.frameRenderer = new FrameRenderer(this);
 
     this.render();
@@ -75,11 +76,6 @@ export default class Graphics {
     );
   };
 
-  initPlanets = () => {
-    this.solarSystem = SolarSystemGenerator.generate();
-    this.scene.add(this.solarSystem.entity);
-  };
-
   createRenderPayload = time => {
     const { previousRenderFrame } = this;
     this.previousRenderFrame = time;
@@ -101,8 +97,7 @@ export default class Graphics {
     this.cameraController.update(payload);
     this.inputController.update(payload);
 
-    // this.effectComposer.render(this.clock.getDelta());
-    this.solarSystem.update(payload);
+    this.currentScreen.update(payload);
     // this.frameRenderer.update(payload);
   };
 }
