@@ -22,10 +22,6 @@ export default class InputController {
     this.raycaster = new Raycaster();
     this.raycaster.linePrecision = 0.2;
 
-    const starChartCanvasWrapper = document.querySelector(
-      "#star-chart-canvas-wrapper"
-    );
-    // TODO - have this take frame into account
     window.addEventListener("mousemove", event => {
       this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -42,11 +38,8 @@ export default class InputController {
     });
 
     window.addEventListener("click", () => {
-      const { intersects } = this;
-
-      if (intersects.length) {
-        EventBus.trigger("input:click", { intersects });
-      }
+      const { intersects, mouse } = this;
+      EventBus.trigger("input:click", { coords: mouse, intersects });
     });
   }
 
