@@ -13,6 +13,11 @@ module.exports = {
     path: __dirname + "/public",
     publicPath: "/"
   },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src/")
+    }
+  },
   devServer: {
     contentBase: path.join(__dirname, "public"),
     compress: true,
