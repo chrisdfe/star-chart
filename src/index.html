@@ -7,57 +7,12 @@
       href="https://fonts.googleapis.com/css?family=Roboto+Mono:100,300,400&display=swap"
       rel="stylesheet"
     />
-    <style>
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        overflow: hidden;
-        /*background-color: #03191e;*/
-        height: 100%;
-      }
-      body {
-        position: relative;
-      }
-      #vertex,
-      #fragment {
-        display: none;
-      }
-      #star-chart-canvas-wrapper {
-        position: absolute;
-        top: 41px;
-        right: 40px;
-        bottom: 40px;
-        left: 40px;
-        /*display: none;*/
-      }
-      #frame-wrapper {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-      }
-      .ui-wrapper {
-        color: #fff;
-        font-family: "Roboto Mono", monospace;
-        font-weight: 100;
-      }
-
-      .ui-planet-name {
-        position: absolute;
-        left: 50%;
-        bottom: 10px;
-        padding: 10px;
-        transform: translateX(-50%);
-      }
-    </style>
   </head>
   <body>
     <div id="frame-wrapper"></div>
     <div id="star-chart-canvas-wrapper">
       <div class="ui-wrapper">
-        <div class="ui-planet-name">test</div>
+        <div class="ui-planet-name"></div>
       </div>
     </div>
   </body>
