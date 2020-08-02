@@ -5,7 +5,11 @@ import uuid4 from "uuid4";
 export const SEED = uuid4();
 
 // TODO - ability to accept external seed
-const random = seedrandom(SEED);
+let random = seedrandom(SEED);
+
+export const seedRandom = (seed) => {
+  random = seedrandom(seed);
+};
 
 export const randomFloat = () => random();
 
@@ -17,7 +21,7 @@ export const randomFloatBetween = (min, max) =>
 export const randomIntegerBetween = (min, max) =>
   Math.floor(randomFloatBetween(min, max));
 
-export const randomItemInArray = array => {
+export const randomItemInArray = (array) => {
   const index = randomIntegerBetween(0, array.length);
   return array[index];
 };

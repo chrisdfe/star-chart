@@ -3,7 +3,7 @@ import {
   randomFloatBetween,
   randomIntegerBetween,
   randomRotation,
-  randomItemInArray
+  randomItemInArray,
 } from "@/lib/randomUtils";
 
 import Planet from "./Planet";
@@ -11,7 +11,7 @@ import MoonGenerator from "./MoonGenerator";
 
 // TODO - this file should go somewhere else since it's not coupled to Graphics
 export default class PlanetGenerator {
-  static generate = params => {
+  static generate = (params) => {
     return new PlanetGenerator().generate(params);
   };
 
@@ -27,7 +27,7 @@ export default class PlanetGenerator {
     Object.assign(this, {
       solarSystem,
       planetCount,
-      planetIndex
+      planetIndex,
     });
 
     this.generatePlanetSize();
@@ -47,7 +47,7 @@ export default class PlanetGenerator {
       planetOrbitSpeed,
       planetRotationSpeed,
       planetOrbitSize,
-      planetMoons
+      planetMoons,
     } = this;
 
     return new Planet({
@@ -59,7 +59,7 @@ export default class PlanetGenerator {
       startRotation: planetStartRotation,
       rotationSpeed: planetRotationSpeed,
       planetIndex,
-      moons: planetMoons
+      moons: planetMoons,
     });
   };
 
@@ -114,7 +114,6 @@ export default class PlanetGenerator {
     const hasMoons = randomFloat() > 0.4;
 
     if (hasMoons) {
-      // TODO - MoonGenerator
       const moon = MoonGenerator.generate();
       this.planetMoons.push(moon);
     }
