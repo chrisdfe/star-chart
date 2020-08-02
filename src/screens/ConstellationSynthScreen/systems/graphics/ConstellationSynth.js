@@ -2,7 +2,9 @@ import { Group } from "three";
 
 import EventBus from "@/lib/EventBus";
 
-import { createX, getCameraDimensions } from "./utils";
+import { getCameraDimensions } from "./utils";
+
+import Star from "./Star";
 
 export default class ConstellationSynth {
   constructor(graphics) {
@@ -19,32 +21,54 @@ export default class ConstellationSynth {
   }
 
   initializeCrosses = () => {
-    this.crosses = [];
+    this.stars = [];
+
     EventBus.on("input:click", ({ coords, intersects }) => {
       const { width, height } = getCameraDimensions();
-      const crossPosition = {
+      const star = new Star().initialize();
+
+      const starPosition = {
         x: (coords.x * width) / 2,
         y: (coords.y * height) / 2
       };
-      const cross = createX(5, crossPosition);
-      this.crosses.push(cross);
-      this.group.add(cross);
+      star.entity.position.x = starPosition.x;
+      star.entity.position.y = starPosition.y;
+
+      this.stars.push(star);
+      this.group.add(star.entity);
 
       // Convert to a 0-1 scale for the sound system
-      const crossY = (crossPosition.y + height / 2) / height;
-      EventBus.trigger("constellation-synth:star-added", { y: crossY });
+      const starY = (starPosition.y + height / 2) / height;
+      EventBus.trigger("constellation-synth:star-added", { y: starY });
+    });
+
+    EventBus.on("input:mouseover", ({ intersects }) => {
+      this.getMatchingIntersects(intersects).forEach(star => {
+        star.onMouseOver();
+      });
+    });
+
+    EventBus.on("input:mouseout", ({ intersects }) => {
+      this.getMatchingIntersects(intersects).forEach(star => {
+        star.onMouseOut();
+      });
     });
 
     window.addEventListener("keydown", e => {
       if (e.key === "Escape") {
-        this.clearCrosses();
+        this.clearStars();
       }
     });
   };
 
-  clearCrosses = () => {
-    this.group.remove(...this.crosses);
-    this.crosses = [];
+  getMatchingIntersects = intersects =>
+    this.stars.filter(
+      star => !!intersects.find(intersect => intersect.id === star.uiObject.id)
+    );
+
+  clearStars = () => {
+    this.group.remove(...this.stars.map(star => star.entity));
+    this.stars = [];
     EventBus.trigger("constellation-synth:stars-cleared");
   };
 }

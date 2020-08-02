@@ -14,7 +14,7 @@ import {
   Vector3,
   Vector4,
   Raycaster,
-  LineBasicMaterial,
+  LineBasicMaterial
 } from "three";
 
 import { EffectComposer, RenderPass } from "postprocessing";
@@ -24,15 +24,11 @@ import EventBus from "@/lib/EventBus";
 import {
   CameraController,
   DOMUIController,
-  InputController,
+  InputController
 } from "./controllers";
 
-import * as Colors from "./Colors";
-
-import SolarSystemGenerator from "./planets/SolarSystemGenerator";
-import FrameRenderer from "./frame/FrameRenderer";
-
-const WINDOW_FRAME_SIZE = 42;
+import * as Colors from "@/lib/Colors";
+import ProceduralPlant from "./ProceduralPlant";
 
 export default class Graphics {
   previousRenderFrame = 0;
@@ -48,10 +44,7 @@ export default class Graphics {
     this.cameraController = new CameraController(this);
     this.inputController = new InputController(this);
 
-    this.solarSystem = SolarSystemGenerator.generate();
-    this.scene.add(this.solarSystem.entity);
-
-    this.frameRenderer = new FrameRenderer(this);
+    this.plant = new ProceduralPlant().initialize();
 
     this.render();
   }
@@ -67,24 +60,21 @@ export default class Graphics {
     this.renderer.setClearColor(Colors.BACKGROUND, 1);
 
     document
-      .querySelector("#star-chart-canvas-wrapper")
+      .querySelector("#constellation-synth-canvas-wrapper")
       .appendChild(this.renderer.domElement);
   };
 
   setRendererSize = () => {
-    this.renderer.setSize(
-      window.innerWidth - WINDOW_FRAME_SIZE * 2 + 3,
-      window.innerHeight - WINDOW_FRAME_SIZE * 2 + 3
-    );
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
   };
 
-  createRenderPayload = (time) => {
+  createRenderPayload = time => {
     const { previousRenderFrame } = this;
     this.previousRenderFrame = time;
     return {
       current: time,
       previous: previousRenderFrame,
-      diff: time - previousRenderFrame,
+      diff: time - previousRenderFrame
     };
   };
 
@@ -98,8 +88,5 @@ export default class Graphics {
 
     this.cameraController.update(payload);
     this.inputController.update(payload);
-
-    this.solarSystem.update(payload);
-    // this.frameRenderer.update(payload);
   };
 }

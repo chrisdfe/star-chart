@@ -2,8 +2,10 @@ import seedrandom from "seedrandom";
 import { Math as ThreeMath } from "three";
 import uuid4 from "uuid4";
 
-export const seed = uuid4();
-const random = seedrandom(seed);
+export const SEED = uuid4();
+
+// TODO - ability to accept external seed
+const random = seedrandom(SEED);
 
 export const randomFloat = () => random();
 

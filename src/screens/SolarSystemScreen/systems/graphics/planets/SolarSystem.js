@@ -7,7 +7,7 @@ import SunGenerator from "./SunGenerator";
 import {
   randomFloat,
   randomFloatBetween,
-  randomIntegerBetween
+  randomIntegerBetween,
 } from "@/lib/randomUtils";
 
 import EventBus from "@/lib/EventBus";
@@ -51,7 +51,7 @@ export default class SolarSystem {
       this.selectedPlanet.onMouseOver();
 
       EventBus.trigger("planet:mouseover", {
-        selectedPlanet: this.selectedPlanet
+        selectedPlanet: this.selectedPlanet,
       });
     }
   };
@@ -59,13 +59,13 @@ export default class SolarSystem {
   handleMouseOut = ({ intersects }) => {
     const planetIntersects = intersects.filter(({ type }) => type === "planet");
 
-    planetIntersects.forEach(uiObject => {
+    planetIntersects.forEach((uiObject) => {
       uiObject.parent.onMouseOut();
     });
 
     if (this.selectedPlanet) {
       EventBus.trigger("planet:mouseout", {
-        selectedPlanet: this.selectedPlanet
+        selectedPlanet: this.selectedPlanet,
       });
       this.selectedPlanet = null;
     }
@@ -74,11 +74,12 @@ export default class SolarSystem {
   handleClick = ({ intersects }) => {
     const uiObject = intersects.find(({ type }) => type === "planet");
     const planet = this.planets.find(
-      planet => planet.uiObject.id === uiObject.id
+      (planet) => planet.uiObject.id === uiObject.id
     );
-    // if (planet) {
-    //   EventBus.trigger("planet:select-requested", { planet });
-    // }
+
+    if (planet) {
+      EventBus.trigger("planet:select-requested", { planet });
+    }
   };
 
   createPlanets() {
@@ -89,11 +90,11 @@ export default class SolarSystem {
       PlanetGenerator.generate({
         solarSystem: this,
         planetCount,
-        planetIndex: index
+        planetIndex: index,
       })
     );
 
-    this.planets.forEach(planet => {
+    this.planets.forEach((planet) => {
       this.group.add(planet.entity);
     });
   }
@@ -104,7 +105,7 @@ export default class SolarSystem {
 
   update(payload) {
     this.group.updateMatrixWorld();
-    this.planets.forEach(planet => {
+    this.planets.forEach((planet) => {
       planet.update(payload);
     });
   }

@@ -1,10 +1,13 @@
 import "./styles.css";
 
-// import SolarSystemScreen from "./screens/SolarSystemScreen";
-import ConstellationSynthScreen from "./screens/ConstellationSynthScreen";
+import SolarSystemScreen from "./screens/SolarSystemScreen";
+// import ConstellationSynthScreen from "./screens/ConstellationSynthScreen";
+// import ProceduralPlantScreen from "./screens/ProceduralPlantScreen";
 
 export default class Game {
   constructor() {
-    this.currentScreen = new ConstellationSynthScreen().initialize();
+    this.currentScreen = new SolarSystemScreen().initialize();
+    // this.currentScreen = new ProceduralPlantScreen().initialize();
+    // this.currentScreen = new ConstellationSynthScreen().initialize();
   }
 }

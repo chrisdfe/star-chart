@@ -12,7 +12,7 @@ import {
   LineDashedMaterial,
   OrthographicCamera,
   Group,
-  Math as ThreeMath
+  Math as ThreeMath,
 } from "three";
 
 import * as Colors from "../Colors";
@@ -25,13 +25,13 @@ import {
   createLine,
   createHorizontalLine,
   horizontallyReverseGroup,
-  createInsetRectLine
+  createInsetRectLine,
 } from "./utils";
 
 import {
   randomRotation,
   randomIntegerBetween,
-  randomFloatBetween
+  randomFloatBetween,
 } from "@/lib/randomUtils";
 
 const FRAME_WIDTH = 40;
@@ -53,7 +53,7 @@ const createZigZag = ({ size = 3, count = 10 } = {}) =>
     ...[...new Array(count)].map((n, index) => {
       return {
         x: index * size,
-        y: size * (index % 2 ? 1 : -1)
+        y: size * (index % 2 ? 1 : -1),
       };
     })
   );
@@ -62,7 +62,7 @@ const createStarCircle = ({
   innerRadius = 5,
   radius = 40,
   crossCount = 10,
-  crossSize = 2
+  crossSize = 2,
 } = {}) => {
   const starCircleGroup = new Group();
 
@@ -77,7 +77,7 @@ const createStarCircle = ({
   [...new Array(crossCount)].forEach(() => {
     const crossGroup = new Group().add(
       createX(crossSize, {
-        x: randomFloatBetween(innerRadius, radius - crossSize)
+        x: randomFloatBetween(innerRadius, radius - crossSize),
       })
     );
     crossGroup.rotateZ(randomRotation());
@@ -148,21 +148,21 @@ export default class FrameRenderer {
   drawTopFrame = () => {
     const { width, height } = getCameraDimensions();
 
-    // Top center cirles
+    // Top center circles
     const TOP_MIDDLE_CENTER = height / 2 - FULL_FRAME_RADIUS;
     this.scene.add(
       createCircle(FULL_FRAME_RADIUS, {
         x: 0,
-        y: TOP_MIDDLE_CENTER
+        y: TOP_MIDDLE_CENTER,
       }),
       createCircle(FULL_FRAME_RADIUS - 5, {
         x: 0,
-        y: TOP_MIDDLE_CENTER
+        y: TOP_MIDDLE_CENTER,
       }),
       createFullCircle(5, { x: 0, y: TOP_MIDDLE_CENTER }),
       createX(FULL_FRAME_RADIUS, {
         x: 0,
-        y: TOP_MIDDLE_CENTER
+        y: TOP_MIDDLE_CENTER,
       })
     );
 
@@ -172,13 +172,13 @@ export default class FrameRenderer {
       .add(
         createCircle(10, {
           x: FULL_FRAME_RADIUS + 10,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       )
       .add(
         createCircle(7, {
           x: FULL_FRAME_RADIUS + 10,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       )
       .add(
@@ -192,31 +192,31 @@ export default class FrameRenderer {
       .add(
         createCircle(4, {
           x: 50,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       )
       .add(
         createCircle(7, {
           x: 100,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       )
       .add(
         createCircle(7, {
           x: 114,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       )
       .add(
         createFullCircle(3, {
           x: 114,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       )
       .add(
         createCircle(7, {
           x: 128,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       )
       .add(
@@ -230,31 +230,31 @@ export default class FrameRenderer {
       .add(
         createCircle(5, {
           x: 240,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       )
       .add(
         createX(5, {
           x: 255,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       )
       .add(
         createX(5, {
           x: 265,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       )
       .add(
         createX(5, {
           x: 275,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       )
       .add(
         createCircle(5, {
           x: 290,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       )
       .add(
@@ -268,13 +268,13 @@ export default class FrameRenderer {
       .add(
         createCircle(7, {
           x: 402,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       )
       .add(
         createFullCircle(3, {
           x: 402,
-          y: TOP_MIDDLE_CENTER
+          y: TOP_MIDDLE_CENTER,
         })
       );
     this.scene.add(topRightGroup);
@@ -291,7 +291,7 @@ export default class FrameRenderer {
     const bottomMiddle = new Group().add(
       createCircle(7, {
         x: 0,
-        y: BOTTOM_MIDDLE_CENTER
+        y: BOTTOM_MIDDLE_CENTER,
       })
     );
     this.scene.add(bottomMiddle);
@@ -309,7 +309,7 @@ export default class FrameRenderer {
     // Circle in bottom left;
     this.starCircleGroupUnderneath = createStarCircle({
       radius: 150,
-      crossCount: randomIntegerBetween(8, 70)
+      crossCount: randomIntegerBetween(8, 70),
     });
     this.starCircleGroupUnderneath.position.x = -(width / 2) + FRAME_WIDTH;
     this.starCircleGroupUnderneath.position.y = -(height / 2) + FRAME_WIDTH;
@@ -317,7 +317,7 @@ export default class FrameRenderer {
 
     this.starCircleGroup = createStarCircle({
       radius: FRAME_WIDTH,
-      crossCount: randomIntegerBetween(8, 20)
+      crossCount: randomIntegerBetween(8, 20),
     });
     this.starCircleGroup.position.x = -(width / 2) + FRAME_WIDTH;
     this.starCircleGroup.position.y = -(height / 2) + FRAME_WIDTH;
@@ -331,7 +331,7 @@ export default class FrameRenderer {
     this.renderer.render(this.scene, this.camera);
   };
 
-  update = payload => {
+  update = (payload) => {
     this.starCircleGroup.rotateZ(ThreeMath.degToRad(0.2));
     this.starCircleGroupUnderneath.rotateZ(ThreeMath.degToRad(0.05));
     this.render(payload);

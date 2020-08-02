@@ -10,7 +10,7 @@ import {
   Line,
   Group,
   Vector3,
-  Math as ThreeMath
+  Math as ThreeMath,
 } from "three";
 import uuid4 from "uuid4";
 
@@ -26,7 +26,7 @@ import {
   createOrbitLineMaterial,
   createCircleGeometry,
   createPlanetSphere,
-  createCircleLine
+  createCircleLine,
 } from "./utils";
 
 // TODO - map ring should be its own class
@@ -39,16 +39,16 @@ const createMapRingMaterial = (params = {}) =>
     dashSize: 0.1,
     gapSize: 0.05,
     depthWrite: false,
-    ...params
+    ...params,
   });
 
 const createMapRing = ({
   geometry: geometryParams,
-  material: materialParams
+  material: materialParams,
 } = {}) => {
   const geometry = createCircleGeometry({
     segmentCount: 32,
-    ...geometryParams
+    ...geometryParams,
   });
   const material = createMapRingMaterial({ ...materialParams });
 
@@ -87,7 +87,7 @@ export default class Planet {
       orbitSpeed = 1,
       planetIndex = -1,
       selectable = true,
-      moons = []
+      moons = [],
     } = options;
 
     Object.assign(this, {
@@ -100,7 +100,7 @@ export default class Planet {
       orbitSpeed,
       planetIndex,
       selectable,
-      moons
+      moons,
     });
 
     if (selectable) {
@@ -122,7 +122,7 @@ export default class Planet {
       type: "planet",
       isInteractable: true,
       id: uuid4(),
-      parent: this
+      parent: this,
     };
   };
 
@@ -173,11 +173,11 @@ export default class Planet {
     [...new Array(verticalMapRingCount)].forEach((u, index) => {
       const mapRing = createMapRing({
         geometry: {
-          radius: size + 0.0001
+          radius: size + 0.0001,
         },
         material: {
-          opacity: index % 4 === 0 ? 0.3 : 0.1
-        }
+          opacity: index % 4 === 0 ? 0.3 : 0.1,
+        },
       });
       mapRing.rotateZ(ThreeMath.degToRad(-90));
       mapRing.rotateX(ThreeMath.degToRad((360 / verticalMapRingCount) * index));
@@ -185,7 +185,7 @@ export default class Planet {
     });
 
     const equatorMapRing = createCircleLine({
-      geometry: { radius: size + 0.0001 }
+      geometry: { radius: size + 0.0001 },
     });
 
     this.mapRings.add(equatorMapRing);
@@ -210,7 +210,7 @@ export default class Planet {
       throw new Error("sphereWrapperGroup is required to call initializeMoons");
     }
 
-    this.moons.forEach(moon => {
+    this.moons.forEach((moon) => {
       this.sphereWrapperGroup.add(moon.entity);
     });
   };
@@ -267,7 +267,7 @@ export default class Planet {
   updateMoons = () => {
     if (!this.moons) return;
 
-    this.moons.forEach(moon => {
+    this.moons.forEach((moon) => {
       moon.update();
     });
   };
