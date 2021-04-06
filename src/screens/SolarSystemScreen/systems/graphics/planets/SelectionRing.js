@@ -1,28 +1,19 @@
 import {
-  SphereGeometry,
-  WireframeGeometry,
   Mesh,
-  MeshBasicMaterial,
-  RawShaderMaterial,
   LineBasicMaterial,
-  LineDashedMaterial,
   Geometry,
   Line,
   Group,
   Vector3,
-  Math as ThreeMath
+  Math as ThreeMath,
 } from "three";
 
-import {
-  randomFloat,
-  randomFloatBetween,
-  randomIntegerBetween
-} from "@/lib/randomUtils";
+import { randomFloatBetween } from "@/lib/randomUtils";
 
 import {
   createOrbitLineMaterial,
   createCircleGeometry,
-  createPlanetSphere
+  createPlanetSphere,
 } from "./utils";
 
 export default class SelectionRing {
@@ -37,7 +28,7 @@ export default class SelectionRing {
       opacity: 1,
       transparent: true,
       linewidth: 1,
-      scale: 1
+      scale: 1,
     });
   };
 
@@ -51,7 +42,7 @@ export default class SelectionRing {
       opacity: 1,
       transparent: true,
       linewidth: 1,
-      scale: 1
+      scale: 1,
     });
 
     this.circle = new Line(
@@ -70,7 +61,7 @@ export default class SelectionRing {
       return line;
     });
 
-    this.lines.forEach(line => {
+    this.lines.forEach((line) => {
       this.group.add(line);
     });
   }

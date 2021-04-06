@@ -1,32 +1,18 @@
-import {
-  SphereGeometry,
-  WireframeGeometry,
-  Mesh,
-  MeshBasicMaterial,
-  RawShaderMaterial,
-  LineBasicMaterial,
-  LineDashedMaterial,
-  Geometry,
-  Line,
-  Group,
-  Vector3,
-  Math as ThreeMath
-} from "three";
-
 import * as Colors from "../Colors";
 
 import Planet from "./Planet";
 
 export default class Sun extends Planet {
-  constructor(options = {}) {
-    const { size = 1 } = options;
+  constructor(attributes = {}) {
     super({
-      size,
+      size: 1.2,
       name: "The Sun",
+      // TODO - semantic/theme colors
       color: Colors.WHITE,
       order: 0,
       orbitSize: 0,
-      rotationSpeed: 0
+      rotationSpeed: 0,
+      ...attributes,
     });
   }
 }

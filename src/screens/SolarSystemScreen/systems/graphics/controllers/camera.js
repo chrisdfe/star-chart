@@ -14,7 +14,7 @@ import {
   Vector3,
   Vector4,
   Raycaster,
-  LineBasicMaterial
+  LineBasicMaterial,
 } from "three";
 import { Interaction } from "three.interaction";
 
@@ -54,7 +54,7 @@ export default class CameraController {
       maxDistance: 1500,
       rotateSpeed: 0.08,
       minDistance: 0,
-      zoomSpeed: 0.2
+      zoomSpeed: 0.2,
     });
 
     window.addEventListener("resize", () => {
@@ -63,18 +63,11 @@ export default class CameraController {
     });
 
     EventBus.on("planet:select-requested", ({ planet }) => {
-      this.orbitControls.enabled = false;
-      planet.entity.updateMatrixWorld();
-      const worldMatrix = planet.sphereWrapperGroup.matrixWorld;
-      const planetPosition = new Vector3().getPositionFromMatrix(worldMatrix);
-
-      // this.camera.position.x = planetPosition.x;
-      // this.camera.position.y = planetPosition.y;
-      // this.camera.position.z = planetPosition.z;
-      // this.camera.lookAt(planetPosition);
-      // this.camera.position.z -= 1;
-      // planet.sphereWrapperGroup.add(this.camera);
-      this.cameraTarget = planet.sphereWrapperGroup;
+      // this.orbitControls.enabled = false;
+      // planet.entity.updateMatrixWorld();
+      // const worldMatrix = planet.sphereWrapperGroup.matrixWorld;
+      // const planetPosition = new Vector3().getPositionFromMatrix(worldMatrix);
+      // this.cameraTarget = planet.sphereWrapperGroup;
     });
   }
 

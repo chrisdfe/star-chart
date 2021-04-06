@@ -1,8 +1,4 @@
 import { Group, Vector3 } from "three";
-import Planet from "./Planet";
-import PlanetGenerator from "./PlanetGenerator";
-
-import SunGenerator from "./SunGenerator";
 
 import {
   randomFloat,
@@ -11,6 +7,10 @@ import {
 } from "@/lib/randomUtils";
 
 import EventBus from "@/lib/EventBus";
+
+import Sun from "./Sun";
+import Planet from "./Planet";
+
 import { Enum } from "./utils";
 
 import { starBackdropFactory } from "./factories";
@@ -19,24 +19,53 @@ export default class SolarSystem {
   static MIN_PLANETS = 3;
   static MAX_PLANETS = 10;
 
-  constructor() {
+  constructor(attributes) {
+    this.attributes = attributes;
+
     this.group = new Group();
     this.entity = this.group;
 
-    this.sun = SunGenerator.generate();
+    // TODO - rename to randomStarBackdropFactory
+    // this.stars = starBackdropFactory();
+    // this.group.add(this.stars);
+
+    // TODO - this should be managed by something else
+    // this.selectedPlanet = null;
+
+    // this.initializeInputHandlers();
+  }
+
+  initialize = () => {
+    const {
+      sun: sunAttributes,
+      planets: planetAttributesList,
+    } = this.attributes;
+
+    this.sun = new Sun(sunAttributes);
     this.add(this.sun.entity);
 
-    this.createPlanets();
-    // TODO - reanme to randomStarBackdropFactory
-    this.stars = starBackdropFactory();
-    this.group.add(this.stars);
+    this.planets = planetAttributesList.map((attributes) => {
+      return new Planet(attributes);
+    });
 
-    this.selectedPlanet = null;
+    this.planets.forEach((planet) => {
+      this.add(planet.entity);
+    });
 
+    return this;
+  };
+
+  initializeInputHandlers = () => {
     EventBus.on("input:mouseover", this.handleMouseOver);
     EventBus.on("input:mouseout", this.handleMouseOut);
     EventBus.on("input:click", this.handleClick);
-  }
+  };
+
+  destroyInputHandlers = () => {
+    EventBus.off("input:mouseover", this.handleMouseOver);
+    EventBus.off("input:mouseout", this.handleMouseOut);
+    EventBus.off("input:click", this.handleClick);
+  };
 
   handleMouseOver = ({ intersects }) => {
     const planetIntersects = intersects.filter(({ type }) => type === "planet");
@@ -82,29 +111,13 @@ export default class SolarSystem {
     }
   };
 
-  createPlanets() {
-    const { MIN_PLANETS, MAX_PLANETS } = SolarSystem;
-    const planetCount = randomIntegerBetween(MIN_PLANETS, MAX_PLANETS);
-
-    this.planets = [...new Array(planetCount)].map((num, index) =>
-      PlanetGenerator.generate({
-        solarSystem: this,
-        planetCount,
-        planetIndex: index,
-      })
-    );
-
-    this.planets.forEach((planet) => {
-      this.group.add(planet.entity);
-    });
-  }
-
   add(entity) {
     this.group.add(entity);
   }
 
   update(payload) {
     this.group.updateMatrixWorld();
+
     this.planets.forEach((planet) => {
       planet.update(payload);
     });

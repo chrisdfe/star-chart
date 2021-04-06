@@ -5,13 +5,14 @@ import EventBus from "@/lib/EventBus";
 
 import { ambiences } from "./ambience";
 
+// TODO - this should go somewhere else
 const chromatics = Object.keys(frequencyMap)
-  .filter(note => /6$/.test(note))
-  .filter(note => !note.includes("#") && !note.includes("b"))
+  .filter((note) => /6$/.test(note))
+  .filter((note) => !note.includes("#") && !note.includes("b"))
   .reduce((accumulator, note) => {
     return {
       ...accumulator,
-      [note]: frequencyMap[note]
+      [note]: frequencyMap[note],
     };
   }, {});
 
@@ -24,14 +25,14 @@ export default class Sound {
   initSelectionSFX = () => {
     this.selectionSFXSynth = new Tone.Synth({
       oscillator: {
-        type: "triangle"
+        type: "triangle",
       },
       envelope: {
         attack: 0.05,
         decay: 0.05,
         sustain: 0.1,
-        release: 0.01
-      }
+        release: 0.01,
+      },
     }).toMaster();
     this.selectionSFXSynth.volume.value = -10;
 

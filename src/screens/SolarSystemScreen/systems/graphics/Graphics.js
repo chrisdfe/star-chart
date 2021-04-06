@@ -20,6 +20,7 @@ import {
 import { EffectComposer, RenderPass } from "postprocessing";
 
 import EventBus from "@/lib/EventBus";
+import Store from "@/lib/Store";
 
 import {
   CameraController,
@@ -29,10 +30,19 @@ import {
 
 import * as Colors from "./Colors";
 
-import SolarSystemGenerator from "./planets/SolarSystemGenerator";
+import SolarSystem from "./planets/SolarSystem";
 import FrameRenderer from "./frame/FrameRenderer";
 
 const WINDOW_FRAME_SIZE = 42;
+
+const generateSolarSystemFromStore = () => {
+  const sceneData = Store.get("sceneData");
+  const { solarSystem: solarSystemData } = sceneData;
+
+  const solarSystem = new SolarSystem(solarSystemData).initialize();
+
+  return solarSystem;
+};
 
 export default class Graphics {
   previousRenderFrame = 0;
@@ -42,13 +52,16 @@ export default class Graphics {
 
     this.initRenderer();
 
+    // TODO - this should go in 'state controller';
     this.isPaused = false;
 
+    // TODO - all of these should probably go up a level - 'Game' should create them,
+    //  not this Graphics class
     this.domUIController = new DOMUIController(this);
     this.cameraController = new CameraController(this);
     this.inputController = new InputController(this);
 
-    this.solarSystem = SolarSystemGenerator.generate();
+    this.solarSystem = generateSolarSystemFromStore();
     this.scene.add(this.solarSystem.entity);
 
     this.frameRenderer = new FrameRenderer(this);
@@ -61,6 +74,8 @@ export default class Graphics {
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
     this.setRendererSize();
+
+    // TODO - this doesn't resize properly
     window.addEventListener("resize", () => {
       this.setRendererSize();
     });
@@ -93,6 +108,7 @@ export default class Graphics {
     requestAnimationFrame(this.render);
 
     if (this.isPaused) return;
+
     this.scene.updateMatrixWorld();
     this.renderer.render(this.scene, this.cameraController.camera);
 
@@ -100,6 +116,6 @@ export default class Graphics {
     this.inputController.update(payload);
 
     this.solarSystem.update(payload);
-    // this.frameRenderer.update(payload);
+    this.frameRenderer.update(payload);
   };
 }

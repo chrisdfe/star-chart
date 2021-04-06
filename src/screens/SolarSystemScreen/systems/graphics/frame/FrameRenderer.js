@@ -35,6 +35,7 @@ import {
 } from "@/lib/randomUtils";
 
 const FRAME_WIDTH = 40;
+
 // For circles
 const FULL_FRAME_RADIUS = FRAME_WIDTH / 2;
 
@@ -138,6 +139,7 @@ export default class FrameRenderer {
   };
 
   initialize = () => {
+    // TODO - all of this should be based off of the current solar system
     this.drawTopFrame();
     this.drawBottomFrame();
 
@@ -307,6 +309,7 @@ export default class FrameRenderer {
     this.scene.add(bottomMiddleRight);
 
     // Circle in bottom left;
+    // TODO - base this off of the current solar system
     this.starCircleGroupUnderneath = createStarCircle({
       radius: 150,
       crossCount: randomIntegerBetween(8, 70),

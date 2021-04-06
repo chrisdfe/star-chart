@@ -14,13 +14,15 @@ import {
 } from "three";
 import uuid4 from "uuid4";
 
-import { randomFloatBetween } from "@/lib/randomUtils";
 import EventBus from "@/lib/EventBus";
+
+import { randomFloatBetween } from "@/lib/randomUtils";
 
 import * as Colors from "../Colors";
 
 import SelectionRing from "./SelectionRing";
 import OrbitCircle from "./OrbitCircle";
+import Moon from "./Moon";
 
 import {
   createOrbitLineMaterial,
@@ -57,55 +59,30 @@ const createMapRing = ({
   return line;
 };
 
+const MIN_OPACITY = 0.8;
+const MAX_OPACITY = 0.9;
+
+// TODO - these should be mapped to a semantic meaning
+// i.e {'jungle': ['0x00ffaaaa', ...etc]}
+const PLANET_COLORS = [0xd7e7e8, 0xafc8c9, 0xafc8c9];
+
 export default class Planet {
-  static MIN_ORBIT_SPEED = 0.05;
-  static MAX_ORBIT_SPEED = 0.4;
-
-  static MIN_ROTATION_SPEED = 0.5;
-  static MAX_ROTATION_SPEED = 4;
-
-  static MIN_PLANET_SIZE = 0.05;
-  static MAX_PLANET_SIZE = 0.2;
-  static MIN_ORBIT_DIFFERENCE = 0.01;
-  static MAX_ORBIT_DIFFERENCE = 2;
-
-  static MIN_OPACITY = 0.8;
-  static MAX_OPACITY = 0.9;
-
-  static PLANET_COLORS = [0xd7e7e8, 0xafc8c9, 0xafc8c9];
-
   elapsed = 0;
 
-  constructor(options = {}) {
-    const {
-      name = "Unnamed Planet",
-      size = 1,
-      color = 0xffaaff,
-      orbitSize = 0,
-      startRotation = 0,
-      rotationSpeed = 1,
-      orbitSpeed = 1,
-      planetIndex = -1,
-      selectable = true,
-      moons = [],
-    } = options;
+  constructor(attributes = {}) {
+    this.attributes = attributes;
+    this.color = 0xffaaff;
+    this.selectable = true;
 
-    Object.assign(this, {
-      name,
-      size,
-      color,
-      orbitSize,
-      startRotation,
-      rotationSpeed,
-      orbitSpeed,
-      planetIndex,
-      selectable,
-      moons,
-    });
-
-    if (selectable) {
-      this.initializeInteractivity();
+    if (attributes.moons) {
+      this.moons = attributes.moons.map((attributes) => new Moon(attributes));
+    } else {
+      this.moons = [];
     }
+
+    // if (this.selectable) {
+    //   this.initializeInteractivity();
+    // }
     this.initializePlanetGroup();
   }
 
@@ -127,11 +104,18 @@ export default class Planet {
   };
 
   initializePlanetGroup = () => {
-    const { name, color, size, orbitSize, orbitSpeed, startRotation } = this;
+    const {
+      name,
+      color,
+      size,
+      orbitSize,
+      orbitSpeed,
+      // startRotation,
+    } = this.attributes;
     this.group = new Group();
 
     this.planetGroup = new Group();
-    this.planetGroup.rotation.y = startRotation;
+    // this.planetGroup.rotation.y = startRotation;
 
     this.sphereWrapperGroup = new Group();
     this.sphereWrapperGroup.position.z = orbitSize;
@@ -166,7 +150,7 @@ export default class Planet {
       );
     }
 
-    const { size } = this;
+    const { size } = this.attributes;
     this.mapRings = new Group();
     const verticalMapRingCount = Math.floor(size * 6);
 
@@ -222,7 +206,11 @@ export default class Planet {
     this.updateOrbitCircle();
 
     // Add some jitteriness to orbit
-    if (this.elapsed > 100) {
+    // TODO
+    // 1) put this value in a constant
+    // 2) increasing/decreasing this value changes the orbit/rotation speed
+    //    ideally those speeds are independant
+    if (this.elapsed > 50) {
       this.elapsed = 0;
 
       this.orbit();
@@ -234,16 +222,16 @@ export default class Planet {
   };
 
   orbit = () => {
-    this.planetGroup.rotateY(ThreeMath.degToRad(1 * this.orbitSpeed));
+    const { orbitSpeed } = this.attributes;
+    this.planetGroup.rotateY(ThreeMath.degToRad(1 * orbitSpeed));
   };
 
   rotate = () => {
-    this.sphere.rotateY(ThreeMath.degToRad(1 * this.rotationSpeed));
+    const { rotationSpeed } = this.attributes;
+    this.sphere.rotateY(ThreeMath.degToRad(1 * rotationSpeed));
   };
 
   updateOpacity = () => {
-    const { MIN_OPACITY, MAX_OPACITY } = Planet;
-
     let newOpacity;
     if (this.isSelected) {
       newOpacity = MAX_OPACITY;

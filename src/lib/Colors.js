@@ -1,3 +1,6 @@
+// TODO -
+// 1) instead of hardcoded constants like this use a theme
+// 2) There's 2 of this exact class - one here and the other in screens/systems/graphics
 export const PEACH = 0xffaa8b;
 // export const NAVY = 0x082233;
 export const NAVY = 0x03191e;
