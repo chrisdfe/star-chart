@@ -1,24 +1,16 @@
 import {
-  SphereGeometry,
-  WireframeGeometry,
-  Mesh,
-  MeshBasicMaterial,
-  RawShaderMaterial,
-  LineBasicMaterial,
   LineDashedMaterial,
-  Geometry,
   Line,
   Group,
-  Vector3,
   Math as ThreeMath,
 } from "three";
 import uuid4 from "uuid4";
 
-import EventBus from "@/lib/EventBus";
+// import EventBus from "@/lib/EventBus";
 
 import { randomFloatBetween } from "@/lib/randomUtils";
 
-import * as Colors from "../Colors";
+// import * as Colors from "../Colors";
 
 import SelectionRing from "./SelectionRing";
 import OrbitCircle from "./OrbitCircle";
@@ -105,11 +97,11 @@ export default class Planet {
 
   initializePlanetGroup = () => {
     const {
-      name,
+      // name,
       color,
       size,
       orbitSize,
-      orbitSpeed,
+      // orbitSpeed,
       // startRotation,
     } = this.attributes;
     this.group = new Group();

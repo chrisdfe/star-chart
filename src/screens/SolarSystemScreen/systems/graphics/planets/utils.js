@@ -1,30 +1,14 @@
 import {
   SphereGeometry,
-  WireframeGeometry,
   Mesh,
   MeshBasicMaterial,
-  MeshStandardMaterial,
-  RawShaderMaterial,
   LineBasicMaterial,
-  LineDashedMaterial,
-  ParticleBasicMaterial,
   Geometry,
   Line,
-  Group,
-  Color,
   Vector3,
-  Math as ThreeMath,
-  AdditiveBlending,
-  Texture,
-  RepeatWrapping
 } from "three";
 
 import { createDebugPlanetTexture } from "./materials/textures";
-import {
-  createDotsShaderMaterial,
-  createLinesShaderMaterial,
-  createNoiseShaderMaterial
-} from "./materials";
 
 export const createCircleGeometry = ({
   radius = 2,

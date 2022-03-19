@@ -1,5 +1,5 @@
 import {
-  Mesh,
+  // Mesh,
   LineBasicMaterial,
   Geometry,
   Line,
@@ -11,9 +11,7 @@ import {
 import { randomFloatBetween } from "@/lib/randomUtils";
 
 import {
-  createOrbitLineMaterial,
   createCircleGeometry,
-  createPlanetSphere,
 } from "./utils";
 
 export default class SelectionRing {
@@ -88,7 +86,6 @@ export default class SelectionRing {
         MIN_SELECTED_OPACITY,
         MAX_SELECTED_OPACITY
       );
-      // newOpacity = 1;
     } else {
       newOpacity = 0;
     }

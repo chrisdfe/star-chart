@@ -1,23 +1,11 @@
 import {
-  SphereGeometry,
-  WireframeGeometry,
-  Mesh,
-  MeshBasicMaterial,
-  RawShaderMaterial,
-  LineBasicMaterial,
-  LineDashedMaterial,
-  Geometry,
-  Line,
   Group,
-  Vector3,
   Math as ThreeMath,
 } from "three";
 
 import OrbitCircle from "./OrbitCircle";
 
 import {
-  createOrbitLineMaterial,
-  createCircleGeometry,
   createPlanetSphere,
 } from "./utils";
 

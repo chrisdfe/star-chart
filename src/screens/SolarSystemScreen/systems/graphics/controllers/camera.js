@@ -1,22 +1,8 @@
 import {
-  Clock,
-  Scene,
   PerspectiveCamera,
-  WebGLRenderer,
-  BoxBufferGeometry,
-  WireframeGeometry,
-  EdgesGeometry,
-  LineSegments,
-  Mesh,
-  MeshBasicMaterial,
-  RawShaderMaterial,
-  Vector2,
-  Vector3,
-  Vector4,
-  Raycaster,
-  LineBasicMaterial,
 } from "three";
-import { Interaction } from "three.interaction";
+
+// import { Interaction } from "three.interaction";
 
 import OrbitControls from "orbit-controls-es6";
 

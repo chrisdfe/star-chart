@@ -11,10 +11,6 @@ import EventBus from "@/lib/EventBus";
 import Sun from "./Sun";
 import Planet from "./Planet";
 
-import { Enum } from "./utils";
-
-import { starBackdropFactory } from "./factories";
-
 export default class SolarSystem {
   static MIN_PLANETS = 3;
   static MAX_PLANETS = 10;

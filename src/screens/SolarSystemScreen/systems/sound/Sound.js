@@ -6,15 +6,15 @@ import EventBus from "@/lib/EventBus";
 import { ambiences } from "./ambience";
 
 // TODO - this should go somewhere else
-const chromatics = Object.keys(frequencyMap)
-  .filter((note) => /6$/.test(note))
-  .filter((note) => !note.includes("#") && !note.includes("b"))
-  .reduce((accumulator, note) => {
-    return {
-      ...accumulator,
-      [note]: frequencyMap[note],
-    };
-  }, {});
+// const chromatics = Object.keys(frequencyMap)
+//   .filter((note) => /6$/.test(note))
+//   .filter((note) => !note.includes("#") && !note.includes("b"))
+//   .reduce((accumulator, note) => {
+//     return {
+//       ...accumulator,
+//       [note]: frequencyMap[note],
+//     };
+//   }, {});
 
 export default class Sound {
   constructor() {

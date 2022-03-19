@@ -1,25 +1,10 @@
 import {
-  Clock,
   Scene,
-  PerspectiveCamera,
   WebGLRenderer,
-  BoxBufferGeometry,
-  WireframeGeometry,
-  EdgesGeometry,
-  LineSegments,
-  Mesh,
-  MeshBasicMaterial,
-  RawShaderMaterial,
-  Vector2,
-  Vector3,
-  Vector4,
-  Raycaster,
-  LineBasicMaterial,
 } from "three";
 
-import { EffectComposer, RenderPass } from "postprocessing";
+// import { EffectComposer, RenderPass } from "postprocessing";
 
-import EventBus from "@/lib/EventBus";
 import Store from "@/lib/Store";
 
 import {
@@ -96,6 +81,7 @@ export default class Graphics {
   createRenderPayload = (time) => {
     const { previousRenderFrame } = this;
     this.previousRenderFrame = time;
+
     return {
       current: time,
       previous: previousRenderFrame,
