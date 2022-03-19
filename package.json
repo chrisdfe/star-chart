@@ -4,9 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --host 0.0.0.0"
+    "build": "rollup -c rollup.config.js",
+    "dev": "npx http-server"
   },
   "dependencies": {
+    "@rollup/plugin-typescript": "^8.3.1",
     "frequency-map": "^1.1.1",
     "postprocessing": "^6.5.1",
     "raw-loader": "^3.0.0",
@@ -15,6 +17,7 @@
     "simplex-noise": "^2.4.0",
     "three": "^0.106.2",
     "tone": "^13.4.9",
+    "typescript": "^4.6.2",
     "uuid4": "^1.1.4"
   },
   "devDependencies": {
@@ -28,6 +31,7 @@
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.7.0",
     "orbit-controls-es6": "^2.0.0",
+    "rollup": "^2.70.1",
     "style-loader": "^0.23.1",
     "three.interaction": "^0.2.2",
     "webpack": "^4.35.0",

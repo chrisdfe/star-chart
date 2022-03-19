@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "esnext",
+    "declaration": true,
+    "outDir": "./public/dist",
+    "strict": true,
+    "moduleResolution": "node"
+  },
+  "include": ["src/"],
+  "exclude": ["node_modules"]
+}
